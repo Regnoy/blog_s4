@@ -1,0 +1,12 @@
+.header { padding: 30px; }
+
+@media (min-width: 960px) { .region-header { display: -webkit-flex; display: flex; -webkit-flex-flow: row nowrap; flex-flow: row nowrap; }
+  .region-header .block-logo { -webkit-flex: 1; flex: 1; } }
+
+.menu--main-menu label, .menu--main-menu input { display: none; }
+.menu--main-menu .menu { margin: 0; padding: 0; border-bottom: 1px dotted #a9a9a9; border-top: 1px dotted #a9a9a9; }
+.menu--main-menu .menu li { list-style: none; }
+.menu--main-menu a { text-transform: uppercase; text-decoration: none; color: #777; display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; height: 40px; padding: 0 15px; background-color: #eee; font: 12px/1 "Oswald", sans-serif; }
+.menu--main-menu a:hover { color: #333; }
+.menu--main-menu a.active { background-color: #d8450b; color: #ffffff; }
+@media (min-width: 960px) { .menu--main-menu .menu { display: -webkit-flex; display: flex; -webkit-flex-direction: row; flex-direction: row; } }

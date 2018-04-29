@@ -1,0 +1,34 @@
+{% extends '@App/page_default.html.twig' %}
+{% block page_title %}{{ page.title }}{% endblock %}
+ {% block main %}
+  <article class="block block--page-view page-view page-{{ page.id }}">
+    <div class="block-content">
+      <div class="fields fields-top">
+        <div class="field field-body">{{ page.body }}</div>
+        <div class="list-link">
+          <div class="list-link-item page-category">{{ page.category.name }}</div>
+          <div class="list-link-item page-created">{{ page.created|date('d-m-Y') }}</div>
+        </div>
+      </div>
+      <div class="field field-comments">
+        <div class="comment-preview">
+          <h2 class="comment-title">Comments</h2>
+          {{ form(comment_form) }}
+          <div class="list">
+            {% for item in page_comments %}
+              <div class="list-item">
+                {{ include('@Comment/ViewMode/teaser.html.twig', {'item' : item }) }}
+                <ul>
+                  <li><a href="{{ path('comment_edit', { 'id' : item.id }) }}">Edit</a></li>
+                  <li><a href="{{ path('comment_delete', { 'id' : item.id }) }}">Delete</a></li>
+                </ul>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </article>
+
+ {% endblock %}

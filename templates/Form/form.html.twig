@@ -1,0 +1,86 @@
+{% block form_row %}
+    {% set class = '' %}
+    {% if form.vars.attr.class is defined %}
+        {% set class = form.vars.attr.class %}
+    {% endif %}
+    <div class="form-row form-row-{{ form.vars.name|lower|replace({'_' : '-'}) }} type-{{ form.vars.block_prefixes.2 }}">
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        {{ form_errors(form) }}
+    </div>
+{% endblock form_row %}
+
+{#{%- block widget_container_attributes -%}#}
+    {#{%- if id is not empty %}id="form-{{ id }}"{% endif -%}#}
+    {#{%- for attrname, attrvalue in attr -%}#}
+        {#{{- " " -}}#}
+        {#{%- if attrname in ['placeholder', 'title'] -%}#}
+            {#{{- attrname }}="{{ attrvalue|trans({}, translation_domain) }}"#}
+        {#{%- elseif attrvalue is same as(true) -%}#}
+            {#{{- attrname }}="{{ attrname }}"#}
+        {#{%- elseif attrvalue is not same as(false) -%}#}
+            {#{{- attrname }}="{{ attrvalue }}"#}
+        {#{%- endif -%}#}
+    {#{%- endfor -%}#}
+{#{%- endblock widget_container_attributes -%}#}
+
+{%- block form_label -%}
+    {% if label is not same as(false) -%}
+        {% if not compound -%}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif -%}
+        {% if required -%}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {%- endif -%}
+        {% if label is empty -%}
+            {%- if label_format is not empty -%}
+                {% set label = label_format|replace({
+                    '%name%': name,
+                    '%id%': id,
+                }) %}
+            {%- else -%}
+                {% set label = name|humanize %}
+            {%- endif -%}
+        {%- endif -%}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ translation_domain is same as(false) ? label : label|trans({}, translation_domain) }}</label>
+    {%- endif -%}
+{%- endblock form_label -%}
+
+{%- block form_errors -%}
+    {%- if errors|length > 0 -%}
+        <div class="error-form">
+            <ul class="list">
+                {%- for error in errors -%}
+                    <li class="list-item">{{ error.message }}</li>
+                {%- endfor -%}
+            </ul>
+        </div>
+    {%- endif -%}
+{%- endblock form_errors -%}
+
+{%- block button_row -%}
+    <div class="form-actions">
+        {{- form_widget(form) -}}
+    </div>
+{%- endblock button_row -%}
+
+{#{%- block form_widget_simple -%}#}
+  {#{%- set type = type|default('text') -%}#}
+  {#{% set attrAutocomplete = 'off' %}#}
+  {#<input type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} autocomplete="{{ attrAutocomplete }}" />#}
+{#{%- endblock form_widget_simple -%}#}
+
+
+{#{%- block form_start -%}#}
+    {#{%- do form.setMethodRendered() -%}#}
+    {#{% set method = method|upper %}#}
+    {#{%- if method in ["GET", "POST"] -%}#}
+        {#{% set form_method = method %}#}
+    {#{%- else -%}#}
+        {#{% set form_method = "POST" %}#}
+    {#{%- endif -%}#}
+    {#<form name="{{ name }}" method="{{ form_method|lower }}"{% if action != '' %} action="{{ action }}"{% endif %}{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %} autocomplete="off" >#}
+    {#{%- if form_method != method -%}#}
+        {#<input type="hidden" name="_method" value="{{ method }}" />#}
+    {#{%- endif -%}#}
+{#{%- endblock form_start -%}#}

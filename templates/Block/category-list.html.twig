@@ -1,0 +1,10 @@
+{% extends "System/nav.html.twig" %}
+{% block block_class %}category-list{% endblock %}
+{% block block_title %}Category{% endblock %}
+{% block block_content %}
+  <ul class="menu">
+    {% for term in terms %}
+      <li class="menu-item"><a href="{{ path('term_view', { 'id' : term.id}) }}">{{ term.name }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

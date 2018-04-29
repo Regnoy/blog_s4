@@ -1,0 +1,14 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+  <div class="layout layout--two-col-4-8">
+    <div class="layout-region layout-region--header">
+      {% block regionHeader %}{% endblock %}
+    </div>
+    <div class="layout-region--wrap">
+      <div class="layout-region layout-region--right">{% block regionRight %}{% endblock %}</div>
+      <div class="layout-region layout-region--left">{% block regionLeft %}{% endblock %}</div>
+    </div>
+  </div>
+
+{% endblock %}

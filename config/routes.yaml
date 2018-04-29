@@ -1,0 +1,111 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+app_preview:
+  path: /preview
+  controller: App\Controller\DefaultController::preview
+#PAGE ROUTES
+page_list:
+  path: /page
+  defaults: { _controller: PageBundle:Page:list }
+
+page_add:
+  path: /page/add
+  defaults: { _controller: PageBundle:Page:add }
+
+page_view:
+  path: /page/{id}
+  defaults: { _controller: PageBundle:Page:view }
+  requirements:
+    id: '\d+'
+
+page_comments:
+  path: /page/{id}/comments
+  defaults: { _controller: PageBundle:Page:comments }
+  requirements:
+    id: '\d+'
+
+page_edit:
+  path: /page/{id}/edit
+  defaults: { _controller: PageBundle:Page:edit }
+  requirements:
+    id: '\d+'
+#
+page_delete:
+  path: /page/{id}/delete
+  defaults: { _controller: PageBundle:Page:remove }
+  requirements:
+    id: '\d+'
+
+page_search:
+  path: /search
+  defaults: { _controller: PageBundle:Page:search }
+
+#TERM ROUTES
+term_list:
+  path: /term
+  defaults : { _controller: TermBundle:Term:list }
+
+term_add:
+  path: /term/add
+  defaults : { _controller: TermBundle:Term:add }
+
+term_view:
+  path: /term/{id}
+  defaults : { _controller: TermBundle:Term:view }
+  requirements:
+    id: '\d+'
+
+term_edit:
+  path: /term/{id}/edit
+  defaults : { _controller: TermBundle:Term:edit }
+  requirements:
+    id: '\d+'
+
+
+term_delete:
+  path: /term/{id}/delete
+  defaults : { _controller: TermBundle:Term:delete }
+  requirements:
+    id: '\d+'
+
+
+#comments ROUTERS
+comment_edit:
+  path: /comment/{id}/edit
+  defaults: { _controller: CommentBundle:Comment:edit }
+  requirements:
+    id: '\d+'
+#
+comment_delete:
+  path: /comment/{id}/delete
+  defaults: { _controller: CommentBundle:Comment:remove }
+  requirements:
+    id: '\d+'
+
+
+#user
+
+login:
+  path: /login
+  controller: App\Controller\SecurityController::login
+
+logout:
+  path: /logout
+
+register:
+  path: /register
+  defaults: { _controller: UserBundle:Security:register }
+
+recover:
+  path: /recover/{token}
+  defaults: { _controller: UserBundle:Security:recover, token: null }
+
+
+user:
+  path: /user
+
+user_password_recover:
+  path: /user/recover-password
+  defaults: { _controller: UserBundle:User:recoverPassword }

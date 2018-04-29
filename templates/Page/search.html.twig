@@ -1,0 +1,18 @@
+{% extends '@App/Layout/layout-two-col-4-8.html.twig' %}
+
+{% block regionRight %}
+  <div class="block block--page-list">
+    <div class="block-content">
+      {{ form(form) }}
+      <div class="list list--page-list">
+        {% for page in pages %}
+          <div class="list-item">
+            {{  include('@Page/ViewMode/teaser.html.twig', { 'item' : page } )  }}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}

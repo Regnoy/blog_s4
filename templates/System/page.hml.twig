@@ -1,0 +1,47 @@
+{% extends "System/base.html.twig" %}
+{% block stylesheets %}
+  <link href="http://fonts.googleapis.com/css?family=Oswald" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="{{ asset('css/base/default.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/base/typography.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/base/form.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/components/page.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/components/header.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/components/footer.css') }}">
+{% endblock %}
+{% block body %}
+  <div class="page-wrap">
+    <div class="page">
+      <header class="header" id="header">
+        <div class="region region-header">
+          {% block header %}{% endblock %}
+        </div>
+      </header>
+      <div class="main-wrap">
+        <aside class="sidebar sidebar-left">
+          <div class="region region-sidebar-left">
+            {% block sidebar_left %}{% endblock %}
+          </div>
+        </aside>
+        <main class="main" id="main">
+          <div class="region region-main">
+            <div class="block block-title-page">
+              <h1 id="page_title">{% block page_title %}{% endblock %}</h1>
+            </div>
+            {% block main %}{% endblock %}
+          </div>
+        </main>
+      </div>
+      <footer class="footer">
+        <div class="footer-top">
+          <div class="region region-footer-top">
+            {% block footer_top %}{% endblock %}
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <div class="region region-footer-bottom">
+            {% block footer_bottom %}{% endblock %}</div>
+        </div>
+      </footer>
+    </div>
+  </div>
+{% endblock %}

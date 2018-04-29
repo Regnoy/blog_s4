@@ -1,0 +1,13 @@
+{% extends "System/page.hml.twig" %}
+{% block page_title %}Main Page Title{% endblock %}
+{% block header %}
+  {{ render(controller('App\\Controller\\BlockController::logo')) }}
+  {{ render(controller('App\\Controller\\BlockController::mainMenu')) }}
+{% endblock %}
+{% block sidebar_left %}
+  {{ render(controller('App\\Controller\\BlockController::category')) }}
+{% endblock %}
+{% block footer_bottom %}
+  {{ include('Block/copyright.html.twig') }}
+  {{ render(controller('App\\Controller\\BlockController::mainMenuFooter')) }}
+{% endblock %}

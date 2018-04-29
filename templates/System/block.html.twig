@@ -1,0 +1,10 @@
+<section class="block block-{% block block_class %}default{% endblock %}">
+  {% block block_title_wrap %}
+    <div class="block-title">
+      <h2>{% block block_title %}{% endblock %}</h2>
+    </div>
+  {% endblock %}
+  {% block block_content_wrap %}
+    <div class="block-content">{% block block_content %}{% endblock %}</div>
+  {% endblock %}
+</section>

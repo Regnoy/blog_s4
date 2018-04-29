@@ -1,0 +1,12 @@
+{% extends "System/nav.html.twig" %}
+{% block block_class %}main-menu menu--main-menu{% endblock %}
+{% block block_title_wrap %}{% endblock %}
+{% block block_content %}
+  <input type="checkbox" class="main-menu-input" id="main-menu-input">
+  <label for="main-menu-input">Hamburger</label>
+  <ul class="menu">
+    <li class="menu-item"><a href="#" class="active">Home</a></li>
+    <li class="menu-item"><a href="#">Articles</a></li>
+    <li class="menu-item"><a href="#">Contacts</a></li>
+  </ul>
+{% endblock %}

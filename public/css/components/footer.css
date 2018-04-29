@@ -1,0 +1,13 @@
+.footer-bottom { max-width: 1200px; margin: 0 auto; background-color: #333; padding: 10px 20px; color: #ababab; }
+@media (min-width: 600px) { .footer .region-footer-bottom { display: -webkit-flex; display: flex; -webkit-flex-direction: row; flex-direction: row; -webkit-align-items: center; align-items: center; }
+  .footer .region-footer-bottom .block-copyright { -webkit-flex: 1; flex: 1; } }
+
+.block-copyright { font-size: 11px; }
+
+.menu--main-menu-footer .menu { margin: 0; padding: 0; }
+.menu--main-menu-footer .menu li { list-style: none; }
+.menu--main-menu-footer a { text-decoration: none; font: 11px/1 "Oswald", sans-serif; color: #dcdcdc; padding: 0 10px; }
+.menu--main-menu-footer a:hover { color: #d8450b; }
+@media (min-width: 600px) { .menu--main-menu-footer .menu { display: -webkit-flex; display: flex; -webkit-flex-direction: row; flex-direction: row; }
+  .menu--main-menu-footer .menu li a { border-right: 1px solid #777; }
+  .menu--main-menu-footer .menu li:last-child a { border-right-width: 0; } }
