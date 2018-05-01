@@ -11,6 +11,7 @@ use App\Entity\UserAccount;
 use App\Forms\RecoverUserForm;
 use App\Forms\RegisterUserForm;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\VarDumper\VarDumper;
 
 
 class SecurityController extends Controller  {
@@ -18,6 +19,7 @@ class SecurityController extends Controller  {
   public function login(AuthenticationUtils $helper){
     $error = $helper->getLastAuthenticationError();
     $lastUsername = $helper->getLastUsername();
+
     return $this->render('User/Security/login.html.twig', array(
       'last_username' => $lastUsername,
       'error'         => $error,

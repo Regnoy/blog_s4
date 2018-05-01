@@ -8,15 +8,15 @@ app_preview:
 #PAGE ROUTES
 page_list:
   path: /page
-  defaults: { _controller: PageBundle:Page:list }
+  controller:  App\Controller\PageController::list
 
 page_add:
   path: /page/add
-  defaults: { _controller: PageBundle:Page:add }
+  controller:  App\Controller\PageController::add
 
 page_view:
   path: /page/{id}
-  defaults: { _controller: PageBundle:Page:view }
+  controller:  App\Controller\PageController::view
   requirements:
     id: '\d+'
 
@@ -28,7 +28,7 @@ page_comments:
 
 page_edit:
   path: /page/{id}/edit
-  defaults: { _controller: PageBundle:Page:edit }
+  controller:  App\Controller\PageController::edit
   requirements:
     id: '\d+'
 #

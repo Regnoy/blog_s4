@@ -1,4 +1,4 @@
-{% extends '@App/page_default.html.twig' %}
+{% extends 'page_default.html.twig' %}
 {% block page_title %}{{ page.title }}{% endblock %}
  {% block main %}
   <article class="block block--page-view page-view page-{{ page.id }}">
@@ -17,7 +17,7 @@
           <div class="list">
             {% for item in page_comments %}
               <div class="list-item">
-                {{ include('@Comment/ViewMode/teaser.html.twig', {'item' : item }) }}
+                {{ include('Comments/ViewMode/teaser.html.twig', {'item' : item }) }}
                 <ul>
                   <li><a href="{{ path('comment_edit', { 'id' : item.id }) }}">Edit</a></li>
                   <li><a href="{{ path('comment_delete', { 'id' : item.id }) }}">Delete</a></li>

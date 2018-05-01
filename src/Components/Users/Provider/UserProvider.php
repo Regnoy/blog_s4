@@ -22,6 +22,7 @@ class UserProvider implements UserProviderInterface {
 
   public function loadUserByUsername($username) {
     $user = $this->em->getRepository(User::class)->loadUserByUsername($username);
+
     if($user)
       return $user;
 

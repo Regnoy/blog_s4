@@ -1,13 +1,13 @@
-{% extends "AppBundle:System:page.hml.twig" %}
+{% extends "System/page.hml.twig" %}
 {% block page_title %}Main Page Title{% endblock %}
 {% block header %}
-  {{ render(controller('AppBundle:Block:logo')) }}
-  {{ render(controller('AppBundle:Block:mainMenu')) }}
+  {{ render(controller('App\\Controller\\BlockController::logo')) }}
+  {{ render(controller('App\\Controller\\BlockController::mainMenu')) }}
 {% endblock %}
 {% block sidebar_left %}
-  {{ render(controller('TermBundle:Blocks:category')) }}
+  {{ render(controller('App\\Controller\\BlockController::category')) }}
 {% endblock %}
 {% block footer_bottom %}
-  {{ include('@App/Block/copyright.html.twig') }}
-  {{ render(controller('AppBundle:Block:mainMenuFooter')) }}
+  {{ include('Block/copyright.html.twig') }}
+  {{ render(controller('App\\Controller\\BlockController::mainMenuFooter')) }}
 {% endblock %}

@@ -4,20 +4,21 @@
 namespace App\Controller;
 
 
-use CommentBundle\Entity\Comment;
-use CommentBundle\Forms\CommentForm;
-use PageBundle\Entity\Page;
-use PageBundle\Forms\PageDeleteForm;
-use PageBundle\Forms\PageForm;
-use PageBundle\Forms\SearchForm;
+use App\Entity\Comment;
+use App\Forms\CommentForm;
+use App\Entity\Page;
+use App\Forms\PageDeleteForm;
+use App\Forms\PageForm;
+use App\Forms\SearchForm;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+
 
 class PageController extends Controller {
 
-  public function listAction( Request $request ){
-    $pageRepo = $this->getDoctrine()->getRepository('PageBundle:Page');
+  public function list( Request $request ){
+    $pageRepo = $this->getDoctrine()->getRepository(Page::class);
     $pager = $request->query->get('page') ? $request->query->get('page') : 1;
     $limit = 2;
     $pages = $pageRepo->findPages($pager, $limit);
@@ -26,14 +27,14 @@ class PageController extends Controller {
       'total' => $pageRepo->countPage(),
       'limit' => $limit
     ];
-    return $this->render('PageBundle:Page:list.html.twig',[
+    return $this->render('Page/list.html.twig',[
       'pages' => $pages,
       'navigator' => $pager
     ]);
   }
 
-  public function viewAction($id, Request $request){
-    $pageRepo = $this->getDoctrine()->getRepository('PageBundle:Page');
+  public function view($id, Request $request){
+    $pageRepo = $this->getDoctrine()->getRepository(Page::class);
     /** @var Page $page */
     $page = $pageRepo->find($id);
     if(!$page){
@@ -54,14 +55,14 @@ class PageController extends Controller {
     $commentRepo = $em->getRepository(Comment::class);
     $comments = $commentRepo->findLastComments($page, 10);
 
-    return $this->render('PageBundle:Page:view.html.twig',[
+    return $this->render('Page/view.html.twig',[
       'page' => $page,
       'comment_form' => $commentForm->createView(),
       'page_comments' => $comments
     ]);
   }
 
-  public function addAction( Request $request ){
+  public function add( Request $request ){
     $page = new Page();
     $form = $this->createForm(PageForm::class, $page );
     $form->handleRequest($request);
@@ -71,14 +72,17 @@ class PageController extends Controller {
       $em->flush();
       return $this->redirectToRoute('page_list');
     }
-    return $this->render('@Page/Page/add.html.twig', [
+    return $this->render('Page/add.html.twig', [
       'form' => $form->createView()
     ]);
   }
-  public function editAction($id, Request $request){
+
+
+  public function edit($id, Request $request){
 //    $request = $this->get('request_stack')->getCurrentRequest();
+
     $em = $this->getDoctrine()->getManager();
-    $repo = $em->getRepository('PageBundle:Page');
+    $repo = $em->getRepository(Page::class);
     $page = $repo->find($id);
     if(!$page)
       return $this->redirectToRoute('page_list');
@@ -90,13 +94,13 @@ class PageController extends Controller {
       $em->flush();
       return $this->redirectToRoute('page_view', [ 'id' => $page->getId() ]);
     }
-    return $this->render('@Page/Page/edit.html.twig', [
+    return $this->render('Page/edit.html.twig', [
       'form' => $form->createView()
     ]);
   }
-  public function removeAction($id, Request $request){
+  public function remove($id, Request $request){
     $em = $this->getDoctrine()->getManager();
-    $repo = $em->getRepository('PageBundle:Page');
+    $repo = $em->getRepository(Page::class);
     $page = $repo->find($id);
     if(!$page)
       return $this->redirectToRoute('page_list');
@@ -112,12 +116,12 @@ class PageController extends Controller {
 
       return $this->redirectToRoute('page_list');
     }
-    return $this->render('@Page/Page/delete.html.twig', [
+    return $this->render('Page/delete.html.twig', [
       'form' => $form->createView()
     ]);
   }
-  public function commentsAction($id, Request $request){
-    $pageRepo = $this->getDoctrine()->getRepository('PageBundle:Page');
+  public function comments($id, Request $request){
+    $pageRepo = $this->getDoctrine()->getRepository(Page::class);
     /** @var Page $page */
     $page = $pageRepo->find($id);
     if(!$page){
@@ -125,7 +129,7 @@ class PageController extends Controller {
     }
     $pager = $request->query->get('pager') ? $request->query->get('pager') : 1;
     $limit = 10;
-    $commentRepo = $this->getDoctrine()->getRepository('CommentBundle:Comment');
+    $commentRepo = $this->getDoctrine()->getRepository(Comment::class);
     $comments = $commentRepo->findComments($page, $pager, $limit);
 
     $pager = [
@@ -134,14 +138,14 @@ class PageController extends Controller {
       'limit' => $limit
     ];
 
-    return $this->render('PageBundle:Page:page_comments.html.twig',[
+    return $this->render('Page/page_comments.html.twig',[
       'page' => $page,
       'comments' => $comments,
       'navigator' => $pager
     ]);
   }
-  public function searchAction( Request $request ){
-    $pageRepo = $this->getDoctrine()->getRepository('PageBundle:Page');
+  public function search( Request $request ){
+    $pageRepo = $this->getDoctrine()->getRepository(Page::class);
     $searchForm = $this->createForm(SearchForm::class);
     $searchForm->handleRequest($request);
     $pages = null;
