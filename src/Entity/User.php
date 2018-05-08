@@ -93,6 +93,7 @@ class User implements \Serializable ,UserInterface {
   }
 
   public function getRoles() {
+    // return $this->roles->toArray();
     $roles = [];
     /** @var Role $role */
     foreach ($this->roles as $role){

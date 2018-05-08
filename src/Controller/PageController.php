@@ -5,6 +5,7 @@ namespace App\Controller;
 
 
 use App\Entity\Comment;
+use App\Entity\User;
 use App\Forms\CommentForm;
 use App\Entity\Page;
 use App\Forms\PageDeleteForm;
@@ -12,7 +13,10 @@ use App\Forms\PageForm;
 use App\Forms\SearchForm;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 
 class PageController extends Controller {
@@ -33,7 +37,8 @@ class PageController extends Controller {
     ]);
   }
 
-  public function view($id, Request $request){
+  public function view($id, Request $request, FlashBagInterface $flashBag){
+
     $pageRepo = $this->getDoctrine()->getRepository(Page::class);
     /** @var Page $page */
     $page = $pageRepo->find($id);
@@ -62,7 +67,7 @@ class PageController extends Controller {
     ]);
   }
 
-  public function add( Request $request ){
+  public function add( Request $request, FlashBagInterface $flashBag ){
     $page = new Page();
     $form = $this->createForm(PageForm::class, $page );
     $form->handleRequest($request);
@@ -70,17 +75,23 @@ class PageController extends Controller {
       $em = $this->getDoctrine()->getManager();
       $em->persist($page);
       $em->flush();
-      return $this->redirectToRoute('page_list');
+      $flashBag->add('success', 'Article is added:'. $page->getTitle());
+      return $this->redirectToRoute('page_view', [ 'id' => $page->getId() ]);
     }
     return $this->render('Page/add.html.twig', [
       'form' => $form->createView()
     ]);
   }
 
-
-  public function edit($id, Request $request){
+  /**
+   * @param $id
+   * @param Request $request
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+   * @IsGranted("ROLE_USER", statusCode=404, message="Article not found")
+   */
+//*
+  public function edit($id, Request $request, FlashBagInterface $flashBag){
 //    $request = $this->get('request_stack')->getCurrentRequest();
-
     $em = $this->getDoctrine()->getManager();
     $repo = $em->getRepository(Page::class);
     $page = $repo->find($id);
@@ -92,13 +103,14 @@ class PageController extends Controller {
     if($form->isSubmitted()){
       $em->persist($page);
       $em->flush();
+      $flashBag->add('success', 'Article is edited:'. $page->getTitle());
       return $this->redirectToRoute('page_view', [ 'id' => $page->getId() ]);
     }
     return $this->render('Page/edit.html.twig', [
       'form' => $form->createView()
     ]);
   }
-  public function remove($id, Request $request){
+  public function remove($id, Request $request, SessionInterface $session){
     $em = $this->getDoctrine()->getManager();
     $repo = $em->getRepository(Page::class);
     $page = $repo->find($id);
@@ -112,6 +124,7 @@ class PageController extends Controller {
     $form->handleRequest($request);
     if($form->isSubmitted()){
       $em->remove($page);
+      $session->getFlashBag('success', 'Article is deleted:'. $page->getTitle());
       $em->flush();
 
       return $this->redirectToRoute('page_list');
