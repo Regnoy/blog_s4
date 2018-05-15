@@ -1,6 +1,6 @@
-{% extends '@App/Layout/layout-two-col-4-8.html.twig' %}
+{% extends 'page_default.html.twig' %}
 
-{% block regionRight %}
+{% block main %}
   <div class="block block--page-view">
     <div class="block-content">
       <h2 class="field field-title">{{ page.title }}</h2>
@@ -10,7 +10,7 @@
           <div class="list">
             {% for item in comments %}
               <div class="list-item">
-                {{ include('@Comment/ViewMode/teaser.html.twig', {'item' : item }) }}
+                {{ include('Comments/ViewMode/teaser.html.twig', {'item' : item }) }}
                 <ul>
                   <li><a href="{{ path('comment_edit', { 'id' : item.id }) }}">Edit</a></li>
                   <li><a href="{{ path('comment_delete', { 'id' : item.id }) }}">Delete</a></li>

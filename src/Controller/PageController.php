@@ -38,7 +38,6 @@ class PageController extends Controller {
   }
 
   public function view($id, Request $request, FlashBagInterface $flashBag){
-
     $pageRepo = $this->getDoctrine()->getRepository(Page::class);
     /** @var Page $page */
     $page = $pageRepo->find($id);
@@ -68,6 +67,7 @@ class PageController extends Controller {
   }
 
   public function add( Request $request, FlashBagInterface $flashBag ){
+
     $page = new Page();
     $form = $this->createForm(PageForm::class, $page );
     $form->handleRequest($request);

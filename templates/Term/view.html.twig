@@ -1,6 +1,6 @@
-{% extends '@App/Layout/layout-two-col-4-8.html.twig' %}
+{% extends 'page_default.html.twig' %}
 
-{% block regionRight %}
+{% block main %}
   <div class="block block--term-view">
     <div class="block-content">
       <h2 class="field field-name">{{ term.name }}</h2>
@@ -9,7 +9,7 @@
         <div class="list list--page-list">
           {% for page in pages %}
             <div class="list-item">
-              {{  include('@Page/ViewMode/teaser.html.twig', { 'item' : page } )  }}
+              {{  include('Page/ViewMode/teaser.html.twig', { 'item' : page } )  }}
             </div>
           {% endfor %}
         </div>

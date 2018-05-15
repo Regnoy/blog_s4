@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class TermController extends Controller {
 
-  public function listAction(){
+  public function list(){
     $terms = $this->getDoctrine()->getRepository(Term::class)->findAll();
 
 
@@ -22,7 +22,7 @@ class TermController extends Controller {
     ]);
   }
 
-  public function addAction(Request $request){
+  public function add(Request $request){
 
     $term = new Term();
     $form = $this->createForm(TermForm::class, $term );
@@ -38,7 +38,7 @@ class TermController extends Controller {
     ]);
 
   }
-  public function viewAction($id){
+  public function view($id){
     $repo = $this->getDoctrine()->getRepository(Term::class);
     /** @var Term $term */
     $term = $repo->find($id);
@@ -52,7 +52,7 @@ class TermController extends Controller {
       'pages' => $pages
     ]);
   }
-  public function editAction($id, Request $request){
+  public function edit($id, Request $request){
     $em = $this->getDoctrine()->getManager();
     $repo = $em->getRepository(Term::class);
     $term = $repo->find($id);
@@ -71,7 +71,7 @@ class TermController extends Controller {
     ]);
   }
 
-  public function deleteAction($id, Request $request){
+  public function delete($id, Request $request){
     $em = $this->getDoctrine()->getManager();
     $repo = $em->getRepository(Term::class);
     $term = $repo->find($id);

@@ -1,0 +1,11 @@
+
+@mixin resetLi{
+  margin:0;
+  padding:0;
+  li{
+    list-style: none;
+  }
+}
+@mixin dist-last-btn($px){
+
+}

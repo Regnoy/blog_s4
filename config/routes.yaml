@@ -45,28 +45,28 @@ page_search:
 #TERM ROUTES
 term_list:
   path: /term
-  defaults : { _controller: TermBundle:Term:list }
+  defaults : { _controller: App\Controller\TermController::list }
 
 term_add:
   path: /term/add
-  defaults : { _controller: TermBundle:Term:add }
+  defaults : { _controller: App\Controller\TermController::add }
 
 term_view:
   path: /term/{id}
-  defaults : { _controller: TermBundle:Term:view }
+  defaults : { _controller: App\Controller\TermController::view }
   requirements:
     id: '\d+'
 
 term_edit:
   path: /term/{id}/edit
-  defaults : { _controller: TermBundle:Term:edit }
+  defaults : { _controller: App\Controller\TermController::edit }
   requirements:
     id: '\d+'
 
 
 term_delete:
   path: /term/{id}/delete
-  defaults : { _controller: TermBundle:Term:delete }
+  defaults : { _controller: App\Controller\TermController::delete }
   requirements:
     id: '\d+'
 

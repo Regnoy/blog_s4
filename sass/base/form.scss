@@ -1,0 +1,48 @@
+@import "../default";
+@import "../inc/variable";
+@import "../inc/mixins";
+form{
+  max-width: 600px;
+  margin:0 auto;
+  label{
+    display: block;
+    margin-bottom: 3px;
+  }
+  button{
+    @include box-shadow(inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05));
+    color: $white;
+    background-color: $gray_22;
+    border-width: 0;
+    padding: 5px 20px;
+    @include border-radius(3px);
+  }
+  .form-row{
+    margin-bottom: 10px;
+    input, select, textarea{
+      width: 100%;
+      @include border-radius(3px);
+      border:1px solid $gray_cc;
+      padding: 3px;
+      height: 30px;
+
+    }
+    input, textarea{
+      @include input-placeholder{
+        @include opacity(1);
+      }
+    }
+  }
+  .type-birthday{
+    & > div{
+      @include display-flex();
+      @include flex-direction(row);
+      & > select{
+        width: calc( ( 100% - 10px ) / 2 );
+        margin-right: 10px;
+        &:last-child{
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}

@@ -1,12 +1,12 @@
-{% extends '@App/Layout/layout-two-col-4-8.html.twig' %}
+{% extends 'page_default.html.twig' %}
 
-{% block regionRight %}
+{% block main %}
   <div class="block block--term-list">
     <div class="block-content">
       <div class="list list--term-list">
         {% for term in terms %}
           <div class="list-item">
-            {{  include('@Term/ViewMode/teaser.html.twig', { 'item' : term } )  }}
+            {{  include('Term/ViewMode/teaser.html.twig', { 'item' : term } )  }}
           </div>
         {% endfor %}
       </div>

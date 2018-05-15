@@ -6,7 +6,9 @@
       <div class="fields fields-top">
         <div class="field field-body">{{ page.body }}</div>
         <div class="list-link">
+          {% if page.category %}
           <div class="list-link-item page-category">{{ page.category.name }}</div>
+          {% endif %}
           <div class="list-link-item page-created">{{ page.created|date('d-m-Y') }}</div>
         </div>
       </div>

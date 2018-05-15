@@ -1,0 +1,50 @@
+@import "../default";
+@import "../inc/variable";
+@import "../inc/mixins";
+.header{
+  padding: 30px;
+}
+.region-header{
+  @include breakpoint($desktop){
+    @include display-flex;
+    @include flex-flow(row nowrap);
+    .block-logo{
+      @include flex(1);
+    }
+  }
+}
+.menu--main-menu{
+  label,input{
+    display: none;
+  }
+  .menu{
+    @include resetLi;
+    border-bottom: 1px dotted $gray_a9;
+    border-top: 1px dotted $gray_a9;
+  }
+  a{
+    text-transform: uppercase;
+    text-decoration: none;
+    color: $gray_77;
+    @include display-flex;
+    @include align-items(center);
+    height: 40px;
+    padding : 0 15px;
+    background-color: $gray_ee;
+    font: 12px/1 "Oswald", sans-serif;
+
+    &:hover{
+      color: $black;
+    }
+    &.active{
+      background-color: $red;
+      color: $white;
+    }
+  }
+  @include breakpoint($desktop){
+    .menu{
+      @include display-flex;
+      @include flex-direction(row);
+    }
+  }
+}

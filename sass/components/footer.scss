@@ -1,0 +1,56 @@
+@import "../default";
+@import "../inc/variable";
+@import "../inc/mixins";
+
+.footer{
+  &-bottom{
+    max-width: 1200px;
+    margin:0 auto;
+    background-color: $black;
+    padding: 10px 20px;
+    color: $gray_ab;
+  }
+  @include breakpoint($tabled){
+    .region-footer-bottom{
+      @include display-flex;
+      @include flex-direction(row);
+      @include align-items(center);
+      .block-copyright{
+        @include flex(1);
+      }
+    }
+  }
+}
+.block-copyright{
+  font-size: 11px;
+}
+.menu--main-menu-footer{
+  .menu{
+    @include resetLi
+  }
+  a{
+    text-decoration: none;
+    font: 11px/1 "Oswald", sans-serif;
+    color: $gray_dc;
+    &:hover{
+      color: $red;
+    }
+    padding: 0 10px;
+  }
+  @include breakpoint($tabled){
+    .menu{
+      @include display-flex;
+      @include flex-direction(row);
+      li{
+        a{
+          border-right: 1px solid $gray_77;
+        }
+        &:last-child{
+          a{
+            border-right-width: 0;
+          }
+        }
+      }
+    }
+  }
+}
