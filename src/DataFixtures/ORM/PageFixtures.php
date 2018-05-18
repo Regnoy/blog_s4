@@ -11,22 +11,25 @@ namespace App\DataFixtures\ORM;
 
 use App\Entity\Page;
 use App\Entity\Term;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 
-class PageFixtures extends Fixture {
+class PageFixtures extends Fixture implements DependentFixtureInterface {
 
   public function load(ObjectManager $manager) {
     $termRepo = $manager->getRepository(Term::class);
-    for ($i = 1 ; $i <= 3; $i++){
+    $user = $manager->getRepository(User::class)->findOneByEmail('info@utilvideo.com');
+    $terms = $termRepo->findAll('Term');
+
+    foreach ($terms as $term){
       $page = new Page();
-      $page->setTitle('Page '.$i);
-      $page->setBody('Body Page'. $i);
-      $term = $termRepo->findOneByName('Term '.$i);
-      if($term){
-        $page->setCategory($term);
-      }
+      $page->setTitle('Page '.$term->getId());
+      $page->setBody('Body Page'. $term->getId());
+      $page->setCategory($term);
+      $page->setUser($user);
       $page->setCreated(new \DateTime());
       $manager->persist($page);
     }

@@ -6,9 +6,10 @@ namespace App\DataFixtures\ORM;
 use App\Entity\Comment;
 use App\Entity\Page;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class CommentFixtures extends Fixture {
+class CommentFixtures extends Fixture implements DependentFixtureInterface {
 
   public function load(ObjectManager $manager) {
     $pageRepo = $manager->getRepository(Page::class);

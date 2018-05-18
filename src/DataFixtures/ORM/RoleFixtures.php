@@ -22,6 +22,14 @@ class RoleFixtures extends Fixture {
       $manager->persist($role);
       $manager->flush();
     }
+    $role = $roleRepo->findByRole('ROLE_ADMIN');
+    if(!$role){
+      $role = new Role();
+      $role->setName("ROLE ADMIN");
+      $role->setRole("ROLE_ADMIN");
+      $manager->persist($role);
+      $manager->flush();
+    }
   }
 
 }

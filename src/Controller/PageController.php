@@ -11,6 +11,7 @@ use App\Entity\Page;
 use App\Forms\PageDeleteForm;
 use App\Forms\PageForm;
 use App\Forms\SearchForm;
+use App\Voter\PageVoter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
@@ -73,7 +74,9 @@ class PageController extends Controller {
     $form->handleRequest($request);
     if($form->isSubmitted()){
       $em = $this->getDoctrine()->getManager();
+      $page->setUser($this->getUser());
       $em->persist($page);
+
       $em->flush();
       $flashBag->add('success', 'Article is added:'. $page->getTitle());
       return $this->redirectToRoute('page_view', [ 'id' => $page->getId() ]);
@@ -92,11 +95,16 @@ class PageController extends Controller {
 //*
   public function edit($id, Request $request, FlashBagInterface $flashBag){
 //    $request = $this->get('request_stack')->getCurrentRequest();
+
+
+
     $em = $this->getDoctrine()->getManager();
     $repo = $em->getRepository(Page::class);
     $page = $repo->find($id);
     if(!$page)
       return $this->redirectToRoute('page_list');
+
+    $this->denyAccessUnlessGranted(PageVoter::EDIT, $page);
 
     $form = $this->createForm(PageForm::class, $page );
     $form->handleRequest($request);
