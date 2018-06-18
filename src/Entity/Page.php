@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
+use App\Components\Language\CurrentLanguage;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-
 
 /**
  * Class Page
@@ -20,33 +20,16 @@ class Page {
    * @ORM\GeneratedValue(strategy="AUTO")
    */
   private $id;
+  /**
+   * ORIGINAL LANGUAGE
+   * @ORM\Column(type="string", length=191)
+   */
+  private $language;
 
   /**
-   * @ORM\Column(type="string", length=255)
+   * @ORM\OneToMany(targetEntity="PageData", mappedBy="page", cascade={"persist", "remove"})
    */
-  private $title;
-
-  /**
-   * @ORM\Column(type="text")
-   */
-  private $body;
-
-  /**
-   * @ORM\ManyToOne(targetEntity="\App\Entity\Term", inversedBy="pages")
-   * @ORM\JoinColumn(name="term_id", referencedColumnName="id")
-   */
-  private $category;
-
-  /**
-   * @ORM\Column(type="datetime")
-   */
-  private $created;
-
-  /**
-   * @ORM\OneToMany(targetEntity="\App\Entity\Comment", mappedBy="page", cascade={"persist", "remove"})
-   * @ORM\OrderBy({"id" = "DESC"})
-   */
-  private $comments;
+  private $data;
 
   /**
    * @ORM\ManyToOne(targetEntity="\App\Entity\User")
@@ -54,9 +37,10 @@ class Page {
    */
   private $user;
 
-  public function __construct() {
-    $this->created = new \DateTime();
-    $this->comments = new ArrayCollection();
+  public function __construct()
+  {
+    $this->data = new ArrayCollection();
+    $this->language = CurrentLanguage::$language;
   }
 
   /**
@@ -67,138 +51,6 @@ class Page {
   public function getId()
   {
     return $this->id;
-  }
-
-  /**
-   * Set title
-   *
-   * @param string $title
-   *
-   * @return Page
-   */
-  public function setTitle($title)
-  {
-    $this->title = $title;
-
-    return $this;
-  }
-
-  /**
-   * Get title
-   *
-   * @return string
-   */
-  public function getTitle()
-  {
-    return $this->title;
-  }
-
-  /**
-   * Set body
-   *
-   * @param string $body
-   *
-   * @return Page
-   */
-  public function setBody($body)
-  {
-    $this->body = $body;
-
-    return $this;
-  }
-
-  /**
-   * Get body
-   *
-   * @return string
-   */
-  public function getBody()
-  {
-    return $this->body;
-  }
-
-  /**
-   * Set created
-   *
-   * @param \DateTime $created
-   *
-   * @return Page
-   */
-  public function setCreated($created)
-  {
-    $this->created = $created;
-
-    return $this;
-  }
-
-  /**
-   * Get created
-   *
-   * @return \DateTime
-   */
-  public function getCreated()
-  {
-    return $this->created;
-  }
-
-  /**
-   * Set category
-   *
-   * @param \App\Entity\Term $category
-   *
-   * @return Page
-   */
-  public function setCategory(Term $category = null)
-  {
-    $this->category = $category;
-
-    return $this;
-  }
-
-  /**
-   * Get category
-   *
-   * @return Term
-   */
-  public function getCategory()
-  {
-    return $this->category;
-  }
-
-  /**
-   * Add comment
-   *
-   * @param Comment $comment
-   *
-   * @return Page
-   */
-  public function addComment(Comment $comment)
-  {
-    $this->comments[] = $comment;
-    return $this;
-  }
-
-  /**
-   * Remove comment
-   *
-   * @param \App\Entity\Comment $comment
-   */
-  public function removeComment(\App\Entity\Comment $comment)
-  {
-    $this->comments->removeElement($comment);
-  }
-
-  /**
-   * Get comments
-   *
-   * @return \Doctrine\Common\Collections\Collection
-   */
-  public function getComments()
-  {
-    return $this->comments;
-  }
-  public function setId(){
-    //
   }
 
   /**
@@ -215,4 +67,36 @@ class Page {
     $this->user = $user;
   }
 
+  /**
+   * @return mixed
+   */
+  public function getLanguage()
+  {
+    return $this->language;
+  }
+
+  /**
+   * @param mixed $language
+   */
+  public function setLanguage($language): void
+  {
+    $this->language = $language;
+  }
+
+  public function addData( PageData $data ){
+    $data->setPage($this);
+    $this->data->add($data);
+  }
+
+  public function removeData( PageData $data ){
+    $this->data->remove($data);
+  }
+
+  public function getData(){
+    return $this->data;
+  }
+
+  public function getEntity(){
+    return $this->data->first();
+  }
 }

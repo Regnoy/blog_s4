@@ -39,6 +39,7 @@ class PageController extends Controller {
   }
 
   public function view($id, Request $request, FlashBagInterface $flashBag){
+    //EN, RU
     $pageRepo = $this->getDoctrine()->getRepository(Page::class);
     /** @var Page $page */
     $page = $pageRepo->find($id);

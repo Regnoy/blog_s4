@@ -1,0 +1,18 @@
+framework:
+  workflows:
+    page:
+      type: 'state_machine'
+      supports:
+        - App/Entity/PageData
+      initial_place: draft
+      places:
+        - draft
+        - moderate
+        - publish
+      transitions:
+        published:
+          from: [draft, moderate]
+          to: publish
+        moderate:
+          from: publish
+          to: moderate

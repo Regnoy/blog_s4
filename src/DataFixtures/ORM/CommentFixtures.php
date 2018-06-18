@@ -12,18 +12,18 @@ use Doctrine\Common\Persistence\ObjectManager;
 class CommentFixtures extends Fixture implements DependentFixtureInterface {
 
   public function load(ObjectManager $manager) {
-    $pageRepo = $manager->getRepository(Page::class);
-    $pages = $pageRepo->findAll();
-    foreach ($pages as $page){
-      for( $i = 1; $i <=15; $i++){
-        $comment = new Comment();
-        $comment->setComment('Comment '.$i. ' > '.$page->getTitle());
-        $page->addComment($comment);
-        $comment->setPage($page);
-      }
-      $manager->persist($page);
-    }
-    $manager->flush();
+//    $pageRepo = $manager->getRepository(Page::class);
+//    $pages = $pageRepo->findAll();
+//    foreach ($pages as $page){
+//      for( $i = 1; $i <=15; $i++){
+//        $comment = new Comment();
+//        $comment->setComment('Comment '.$i. ' > '.$page->getTitle());
+//        $page->addComment($comment);
+//        $comment->setPage($page);
+//      }
+//      $manager->persist($page);
+//    }
+//    $manager->flush();
   }
   public function getDependencies() {
     return [

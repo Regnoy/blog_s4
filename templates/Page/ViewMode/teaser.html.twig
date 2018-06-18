@@ -1,6 +1,6 @@
 <div class="fields">
-  <h2 class="field field-title">{{ item.title }}</h2>
-  <div class="field field-body">{{ item.body }}</div>
+  <h2 class="field field-title">{{ item.entity.title }}</h2>
+  <div class="field field-body">{{ item.entity.fieldBody.summary }}</div>
   {% set path = path('page_view', {'id' : item.id }) %}
   <div class="field field-page-link"><a href="{{ path }}">Read more</a></div>
 </div>

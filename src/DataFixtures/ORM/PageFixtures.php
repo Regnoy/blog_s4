@@ -10,6 +10,8 @@ namespace App\DataFixtures\ORM;
 
 
 use App\Entity\Page;
+use App\Entity\PageBody;
+use App\Entity\PageData;
 use App\Entity\Term;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -23,14 +25,21 @@ class PageFixtures extends Fixture implements DependentFixtureInterface {
     $termRepo = $manager->getRepository(Term::class);
     $user = $manager->getRepository(User::class)->findOneByEmail('info@utilvideo.com');
     $terms = $termRepo->findAll('Term');
-
+    /** @var Term $term */
     foreach ($terms as $term){
       $page = new Page();
-      $page->setTitle('Page '.$term->getId());
-      $page->setBody('Body Page'. $term->getId());
-      $page->setCategory($term);
       $page->setUser($user);
-      $page->setCreated(new \DateTime());
+
+      $pageData = new PageData();
+      $pageData->setLanguage($page->getLanguage());
+      $page->addData($pageData);
+      $pageData->setTitle('Page '.$term->getId());
+
+      $pageBody = new PageBody();
+      $pageBody->setBody('Body article '.$term->getId());
+      $pageBody->setSummary('Summary article '.$term->getId());
+      $pageData->addBody($pageBody);
+      $pageData->setCreated(new \DateTime());
       $manager->persist($page);
     }
     $manager->flush();
