@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use App\Components\Language\CurrentLanguage;
 use App\Entity\Comment;
 use App\Entity\User;
 use App\Forms\CommentForm;
@@ -26,6 +27,7 @@ class PageController extends Controller {
     $pageRepo = $this->getDoctrine()->getRepository(Page::class);
     $pager = $request->query->get('page') ? $request->query->get('page') : 1;
     $limit = 2;
+//    CurrentLanguage::$language = 'ru';
     $pages = $pageRepo->findPages($pager, $limit);
     $pager = [
       'pager' => $pager,
@@ -40,11 +42,16 @@ class PageController extends Controller {
 
   public function view($id, Request $request, FlashBagInterface $flashBag){
     //EN, RU
+//    CurrentLanguage::$language = 'fr';
     $pageRepo = $this->getDoctrine()->getRepository(Page::class);
     /** @var Page $page */
     $page = $pageRepo->find($id);
     if(!$page){
       throw $this->createNotFoundException('The page does not exist');
+    }
+    $pageData = $page->getEntity();
+    if(!$pageData){
+      throw $this->createNotFoundException('Translation page does not exist');
     }
     $em = $this->getDoctrine()->getManager();
     $commentForm = $this->createForm(CommentForm::class);
@@ -62,7 +69,7 @@ class PageController extends Controller {
     $comments = $commentRepo->findLastComments($page, 10);
 
     return $this->render('Page/view.html.twig',[
-      'page' => $page,
+      'page_data' => $pageData,
       'comment_form' => $commentForm->createView(),
       'page_comments' => $comments
     ]);

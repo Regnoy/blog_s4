@@ -3,7 +3,7 @@ framework:
     page:
       type: 'state_machine'
       supports:
-        - App/Entity/PageData
+        - App\Entity\PageData
       initial_place: draft
       places:
         - draft

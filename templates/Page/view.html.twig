@@ -1,15 +1,15 @@
 {% extends 'page_default.html.twig' %}
-{% block page_title %}{{ page.entity.title }}{% endblock %}
+{% block page_title %}{{ page_data.title }}{% endblock %}
  {% block main %}
-  <article class="block block--page-view page-view page-{{ page.id }}">
+  <article class="block block--page-view page-view page-{{ page_data.page.id }}">
     <div class="block-content">
       <div class="fields fields-top">
-        <div class="field field-body">{{ page.entity.fieldBody.body }}</div>
+        <div class="field field-body">{{ page_data.fieldBody.body }}</div>
         <div class="list-link">
           {#{% if page.category %}#}
           {#<div class="list-link-item page-category">{{ page.category.name }}</div>#}
           {#{% endif %}#}
-          <div class="list-link-item page-created">{{ page.entity.created|date('d-m-Y') }}</div>
+          <div class="list-link-item page-created">{{ page_data.created|date('d-m-Y') }}</div>
         </div>
       </div>
       {#<div class="field field-comments">#}
