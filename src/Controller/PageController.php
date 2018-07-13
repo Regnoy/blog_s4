@@ -27,7 +27,7 @@ class PageController extends Controller {
     $pageRepo = $this->getDoctrine()->getRepository(Page::class);
     $pager = $request->query->get('page') ? $request->query->get('page') : 1;
     $limit = 2;
-//    CurrentLanguage::$language = 'ru';
+
     $pages = $pageRepo->findPages($pager, $limit);
     $pager = [
       'pager' => $pager,

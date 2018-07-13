@@ -7,6 +7,12 @@ app_preview:
   controller: App\Controller\DefaultController::preview
 #PAGE ROUTES
 page_list:
+  path: /{_locale}/page
+  controller:  App\Controller\PageController::list
+  requirements:
+    _locale: '%app.locales%'
+
+page_list_direct:
   path: /page
   controller:  App\Controller\PageController::list
 
