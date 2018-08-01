@@ -44,7 +44,6 @@ class PageData
    */
   private $created;
 
-
   /**
    * @ORM\Column(type="datetime")
    */
@@ -59,6 +58,10 @@ class PageData
    */
   private $body;
 
+  /**
+   * @ORM\OneToMany(targetEntity="Term", mappedBy="entity")
+   */
+  private $category;
   public function __construct()
   {
     $this->body = new ArrayCollection();

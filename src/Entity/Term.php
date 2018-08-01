@@ -21,14 +21,9 @@ class Term {
   private $id;
 
   /**
-   * @ORM\Column(type="string", length=255)
+   * @ORM\Column(type="string", length=191)
    */
-  private $name;
-
-  /**
-   * @ORM\Column(type="text")
-   */
-  private $description;
+  private $machineName;
 
   /**
    * @ORM\Column(type="datetime")
@@ -37,136 +32,110 @@ class Term {
 
 
   /**
-   * @ORM\OneToMany(targetEntity="Page", mappedBy="category")
+   * @ORM\OneToMany(targetEntity="PageData", mappedBy="category")
    */
-  private $pages;
+  private $entities;
 
 
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+  /**
+   * Get id
+   *
+   * @return integer
+   */
+  public function getId()
+  {
+    return $this->id;
+  }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Term
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
+  /**
+   * @return mixed
+   */
+  public function getMachineName()
+  {
+    return $this->machineName;
+  }
 
-        return $this;
-    }
+  /**
+   * @param mixed $machineName
+   */
+  public function setMachineName($machineName): void
+  {
+    $this->machineName = $machineName;
+  }
 
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
 
-    /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return Term
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
 
-        return $this;
-    }
+  /**
+   * Set created
+   *
+   * @param \DateTime $created
+   *
+   * @return Term
+   */
+  public function setCreated($created)
+  {
+    $this->created = $created;
 
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
+    return $this;
+  }
 
-    /**
-     * Set created
-     *
-     * @param \DateTime $created
-     *
-     * @return Term
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
+  /**
+   * Get created
+   *
+   * @return \DateTime
+   */
+  public function getCreated()
+  {
+    return $this->created;
+  }
+  /**
+   * Constructor
+   */
+  public function __construct()
+  {
+    $this->entities = new ArrayCollection();
+    $this->created = new \DateTime();
+  }
 
-        return $this;
-    }
+  /**
+   * Add page
+   *
+   * @param \App\Entity\PageData $page
+   *
+   * @return Term
+   */
+  public function addEntity(\App\Entity\PageData $pageData)
+  {
+    $this->entities[] = $pageData;
 
-    /**
-     * Get created
-     *
-     * @return \DateTime
-     */
-    public function getCreated()
-    {
-        return $this->created;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->pages = new ArrayCollection();
-      $this->created = new \DateTime();
-    }
+    return $this;
+  }
 
-    /**
-     * Add page
-     *
-     * @param \App\Entity\Page $page
-     *
-     * @return Term
-     */
-    public function addPage(\App\Entity\Page $page)
-    {
-        $this->pages[] = $page;
+  /**
+   * Remove page
+   *
+   * @param \App\Entity\PageData $page
+   */
+  public function removeEntity(\App\Entity\PageData $pageData)
+  {
+    $this->entities->removeElement($pageData);
+  }
 
-        return $this;
-    }
+  /**
+   * Get pages
+   *
+   * @return \Doctrine\Common\Collections\Collection
+   */
+  public function getPages()
+  {
+    return $this->entities;//$this->pages->toArray();
+  }
+  public function __toString() {
+    return $this->machineName;
+  }
 
-    /**
-     * Remove page
-     *
-     * @param \App\Entity\Page $page
-     */
-    public function removePage(\App\Entity\Page $page)
-    {
-        $this->pages->removeElement($page);
-    }
-
-    /**
-     * Get pages
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPages()
-    {
-        return $this->pages;//$this->pages->toArray();
-    }
-    public function __toString() {
-      return $this->name;
-    }
+  public static function termList(){
+    return ['term_one', 'term_two' , 'term_three'];
+  }
 }

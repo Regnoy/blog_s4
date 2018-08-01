@@ -17,12 +17,16 @@ use Doctrine\Common\Persistence\ObjectManager;
 class TermFixtures extends Fixture {
 
   public function load(ObjectManager $manager) {
-    for ($i = 1 ; $i <= 3; $i++){
-      $term = new Term();
-      $term->setName("Term ".$i);
-      $term->setDescription('DESCRIPTION '.$i);
-      $manager->persist($term);
-    }
+
+    $term = new Term();
+    $term->setMachineName("term_one");
+    $manager->persist($term);
+    $term = new Term();
+    $term->setMachineName("term_two");
+    $manager->persist($term);
+    $term = new Term();
+    $term->setMachineName("term_three");
+    $manager->persist($term);
     $manager->flush();
 
   }

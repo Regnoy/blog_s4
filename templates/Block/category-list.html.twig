@@ -4,7 +4,8 @@
 {% block block_content %}
   <ul class="menu">
     {% for term in terms %}
-      <li class="menu-item"><a href="{{ path('term_view', { 'id' : term.id}) }}">{{ term.name }}</a></li>
+      {% set termTrans = 'term.' ~ term.machineName  %}
+      <li class="menu-item"><a href="{{ path('term_view', { 'id' : term.id}) }}">{{ termTrans | trans }}</a></li>
     {% endfor %}
   </ul>
 {% endblock %}
