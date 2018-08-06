@@ -32,7 +32,8 @@ class Term {
 
 
   /**
-   * @ORM\OneToMany(targetEntity="PageData", mappedBy="category")
+   * @ORM\ManyToOne(targetEntity="PageData", inversedBy="category")
+   * @ORM\JoinColumn(name="entity_id", referencedColumnName="id")
    */
   private $entities;
 

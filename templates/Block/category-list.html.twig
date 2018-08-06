@@ -1,6 +1,6 @@
 {% extends "System/nav.html.twig" %}
 {% block block_class %}category-list{% endblock %}
-{% block block_title %}Category{% endblock %}
+{% block block_title %}{{ 'category'|trans }}{% endblock %}
 {% block block_content %}
   <ul class="menu">
     {% for term in terms %}

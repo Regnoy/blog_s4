@@ -21,10 +21,11 @@ page_add:
   controller:  App\Controller\PageController::add
 
 page_view:
-  path: /page/{id}
+  path: /{_locale}/page/{id}
   controller:  App\Controller\PageController::view
   requirements:
     id: '\d+'
+    _locale: '%app.locales%'
 
 page_comments:
   path: /page/{id}/comments

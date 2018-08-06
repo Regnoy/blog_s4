@@ -59,9 +59,10 @@ class PageData
   private $body;
 
   /**
-   * @ORM\OneToMany(targetEntity="Term", mappedBy="entity")
+   * @ORM\OneToMany(targetEntity="Term", mappedBy="entities")
    */
   private $category;
+
   public function __construct()
   {
     $this->body = new ArrayCollection();
@@ -69,6 +70,7 @@ class PageData
     $this->created = new \DateTime();
     $this->updated = new \DateTime();
     $this->marking = 'draft';
+    $this->category = new ArrayCollection();
   }
 
 
@@ -198,6 +200,28 @@ class PageData
   public function getFieldBody(){
     return $this->body->first();
   }
+
+  /**
+   * @return mixed
+   */
+  public function getCategory()
+  {
+    return $this->category;
+  }
+
+  /**
+   * @param mixed $category
+   */
+  public function addCategory($category): void
+  {
+    $this->category[] = $category;
+  }
+
+  public function removeCategory($category){
+    $this->category->remove($category);
+  }
+
+
 
 
 }

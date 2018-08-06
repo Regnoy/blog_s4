@@ -2,3 +2,9 @@ term:
   term_one: 'Term One'
   term_two: 'Term Two'
   term_three: 'Term Three'
+
+main_menu:
+    home: 'Home'
+    article: 'Articles'
+    contacts: 'Contacts'
+category : 'Category'
