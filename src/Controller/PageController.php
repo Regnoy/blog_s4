@@ -16,9 +16,14 @@ use App\Voter\PageVoter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\JsonEncode;
+use Symfony\Component\Serializer\Serializer;
 
 
 class PageController extends Controller {
@@ -186,6 +191,59 @@ class PageController extends Controller {
       'pages' => $pages,
       'form' => $searchForm->createView()
     ]);
+  }
+
+  /**
+   * @param Request $request
+   * @return \Symfony\Component\HttpFoundation\Response
+   * @Route("page-ajax", name="page_list_ajax")
+   */
+  public function listAjax( Request $request ){
+    $pageRepo = $this->getDoctrine()->getRepository(Page::class);
+
+    $limit = 2;
+
+    $pages = $pageRepo->findPages(1, $limit);
+
+    return $this->render('Page/list-ajax.html.twig',[
+      'pages' => $pages,
+    ]);
+  }
+
+  /**
+   * @param Request $request
+   * @return Response
+   * @Route("page-api", name="page_api", defaults={"_format"="json"})
+   */
+  public function pageApi( Request $request, \Twig_Environment $twig ){
+    $pager = $request->query->get('page') ? $request->query->get('page') : 1;
+    $limit = 2;
+    $pageRepo = $this->getDoctrine()->getRepository(Page::class);
+    $pages = $pageRepo->findPages($pager, $limit);
+    $rs = [];
+    $response = [
+//      'messages' => [
+//        'success' => [],
+//        'warning' => []
+//      ],
+      'result' => [],
+      'empty' => null
+    ];
+    if($pages){
+      foreach ($pages as $page){
+        $rs[] = $twig->render('Page/ViewMode/teaser.html.twig', [
+          'item' => $page
+        ]);
+      }
+      $response['result'] = $rs;
+    } else {
+      $response['empty'] = 1;
+    }
+    $jsonResponse = new JsonResponse();
+    $jsonResponse->headers->set('Content-Type', 'application/json');
+    $jsonResponse->setEncodingOptions(JSON_UNESCAPED_UNICODE);
+    $jsonResponse->setData($response);
+    return $jsonResponse;
   }
 
 }

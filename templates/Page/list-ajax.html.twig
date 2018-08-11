@@ -1,0 +1,22 @@
+{% extends 'page_default.html.twig' %}
+
+{% block main %}
+  <div class="block block--page-list">
+    <div class="block-content">
+      <div class="list list--page-list" id="page_list_navigation">
+        {% for page in pages %}
+          <div class="list-item">
+            {{  include('Page/ViewMode/teaser.html.twig', { 'item' : page } )  }}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="block-navigation">
+      <div class="pager-btn">
+        <button id="page_load_more" data-page="1">Load more</button>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}
