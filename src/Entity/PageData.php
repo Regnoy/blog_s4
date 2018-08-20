@@ -83,7 +83,7 @@ class PageData
   }
 
   /**
-   * @return mixed
+   * @return Page
    */
   public function getPage()
   {
@@ -196,7 +196,9 @@ class PageData
     $this->body->add($body);
   }
 
-
+  /**
+   * @return PageBody
+   */
   public function getFieldBody(){
     return $this->body->first();
   }
@@ -220,7 +222,9 @@ class PageData
   public function removeCategory($category){
     $this->category->remove($category);
   }
-
+  public function getFieldCategory(){
+    return $this->category->first();
+  }
 
 
 

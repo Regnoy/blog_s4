@@ -96,13 +96,21 @@ class Page {
     return $this->data;
   }
 
-  public function getEntity( $language = null ){
-    if(is_null($language)){
-      $language = CurrentLanguage::$language;
+  /**
+   * @param null $language
+   * @return PageData
+   */
+      public function getEntity( $language = null ){
+        if(is_null($language)){
+          $language = CurrentLanguage::$language;
+        }
+        $arr = $this->data->filter(function($entity) use ($language){
+          return $entity->getLanguage() == $language;
+        });
+        $entity = $arr->first();
+        if(!$entity){
+      $entity = new PageData();
     }
-    $arr = $this->data->filter(function($entity) use ($language){
-      return $entity->getLanguage() == $language;
-    });
-    return $arr->first();
+    return $entity;
   }
 }

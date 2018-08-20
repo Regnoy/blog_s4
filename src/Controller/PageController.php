@@ -5,12 +5,14 @@ namespace App\Controller;
 
 
 use App\Components\Language\CurrentLanguage;
+use App\Components\Page\Form\PageForm;
+use App\Components\Page\Model\PageModel;
 use App\Entity\Comment;
 use App\Entity\User;
 use App\Forms\CommentForm;
 use App\Entity\Page;
 use App\Forms\PageDeleteForm;
-use App\Forms\PageForm;
+
 use App\Forms\SearchForm;
 use App\Voter\PageVoter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -81,22 +83,31 @@ class PageController extends Controller {
   }
 
   public function add( Request $request, FlashBagInterface $flashBag ){
-
     $page = new Page();
-    $form = $this->createForm(PageForm::class, $page );
-    $form->handleRequest($request);
-    if($form->isSubmitted()){
-      $em = $this->getDoctrine()->getManager();
-      $page->setUser($this->getUser());
-      $em->persist($page);
+    $pageModel = new PageModel();
+    $pageModel->attachPage($page, CurrentLanguage::$language);
 
-      $em->flush();
-      $flashBag->add('success', 'Article is added:'. $page->getTitle());
-      return $this->redirectToRoute('page_view', [ 'id' => $page->getId() ]);
-    }
+    $form = $this->createForm(PageForm::class, $pageModel, [
+      'entity_manager' => $this->getDoctrine()->getManager()
+    ]);
+    $form->handleRequest($request);
     return $this->render('Page/add.html.twig', [
       'form' => $form->createView()
     ]);
+
+//
+//    $form = $this->createForm(PageForm::class, $page );
+//    $form->handleRequest($request);
+//    if($form->isSubmitted()){
+//      $em = $this->getDoctrine()->getManager();
+//      $page->setUser($this->getUser());
+//      $em->persist($page);
+//
+//      $em->flush();
+//      $flashBag->add('success', 'Article is added:'. $page->getTitle());
+//      return $this->redirectToRoute('page_view', [ 'id' => $page->getId() ]);
+//    }
+
   }
 
   /**
