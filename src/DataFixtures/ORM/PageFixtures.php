@@ -22,9 +22,10 @@ use Doctrine\Common\Persistence\ObjectManager;
 class PageFixtures extends Fixture implements DependentFixtureInterface {
 
   public function load(ObjectManager $manager) {
+
     $termRepo = $manager->getRepository(Term::class);
     $user = $manager->getRepository(User::class)->findOneByEmail('info@utilvideo.com');
-    $terms = $termRepo->findAll('Term');
+    $terms = $termRepo->findAll();
     /** @var Term $term */
     foreach ($terms as $term){
       $page = new Page();

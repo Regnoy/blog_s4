@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @package PageBundle\Entity
  * @ORM\Entity(repositoryClass="App\Repository\PageRepository")
  * @ORM\Table(name="page")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Page {
 
@@ -112,5 +113,12 @@ class Page {
       $entity = new PageData();
     }
     return $entity;
+  }
+  /**
+   * @ORM\PrePersist
+   */
+  public function setPrePersist()
+  {
+    $this->language = CurrentLanguage::$language;
   }
 }

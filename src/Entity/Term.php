@@ -31,11 +31,7 @@ class Term {
   private $created;
 
 
-  /**
-   * @ORM\ManyToOne(targetEntity="PageData", inversedBy="category")
-   * @ORM\JoinColumn(name="entity_id", referencedColumnName="id")
-   */
-  private $entities;
+
 
 
 
@@ -99,39 +95,7 @@ class Term {
     $this->created = new \DateTime();
   }
 
-  /**
-   * Add page
-   *
-   * @param \App\Entity\PageData $page
-   *
-   * @return Term
-   */
-  public function addEntity(\App\Entity\PageData $pageData)
-  {
-    $this->entities[] = $pageData;
 
-    return $this;
-  }
-
-  /**
-   * Remove page
-   *
-   * @param \App\Entity\PageData $page
-   */
-  public function removeEntity(\App\Entity\PageData $pageData)
-  {
-    $this->entities->removeElement($pageData);
-  }
-
-  /**
-   * Get pages
-   *
-   * @return \Doctrine\Common\Collections\Collection
-   */
-  public function getPages()
-  {
-    return $this->entities;//$this->pages->toArray();
-  }
   public function __toString() {
     return $this->machineName;
   }

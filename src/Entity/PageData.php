@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @package PageBundle\Entity
  * @ORM\Entity
  * @ORM\Table(name="page_data")
+ * @ORM\HasLifecycleCallbacks()
  */
 class PageData
 {
@@ -66,10 +67,6 @@ class PageData
   public function __construct()
   {
     $this->body = new ArrayCollection();
-    $this->language = CurrentLanguage::$language;;
-    $this->created = new \DateTime();
-    $this->updated = new \DateTime();
-    $this->marking = 'draft';
     $this->category = new ArrayCollection();
   }
 
@@ -226,6 +223,19 @@ class PageData
     return $this->category->first();
   }
 
+  /**
+   * @ORM\PrePersist
+   */
+  public function setPrePersist()
+  {
+    if(is_null($this->language)){
+      $this->language = $this->getPage()->getLanguage();
+    }
+
+    $this->created = new \DateTime();
+    $this->updated = new \DateTime();
+    $this->marking = 'draft';
+  }
 
 
 }
