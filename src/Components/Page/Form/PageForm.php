@@ -3,10 +3,12 @@
 
 namespace App\Components\Page\Form;
 use App\Components\Page\Model\PageModel;
+use App\Entity\Page;
 use App\Entity\Term;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -19,9 +21,28 @@ class PageForm extends AbstractType
   {
     /** @var EntityManagerInterface $entityManager */
     $entityManager = $options['entity_manager'];
+    /** @var PageModel $page */
+    $page = $options['data'];
 
     $builder->add('title', TextType::class, [
-      'label' => 'Title'
+      'label' => 'Title',
+
+    ]);
+    //ru > save > ru > add > en > disabled
+    $pageLanguage = $page->getPage()->getLanguage();
+    $isDiabledLanguage = false;
+    if(!is_null($pageLanguage) || (!is_null($page->getId()) && $pageLanguage != $page->getLanguage()) ){
+      $isDiabledLanguage = true;
+    }
+
+    $builder->add('language', ChoiceType::class, [
+      'label' => 'Language',
+      'choices' => array(
+        'English' => 'en',
+        'Russian' => 'ru',
+      ),
+      'data' => $page->getLanguage(),
+      'disabled' => $isDiabledLanguage
     ]);
     //PageBodyType::Class
     $builder->add('summary', TextareaType::class, [

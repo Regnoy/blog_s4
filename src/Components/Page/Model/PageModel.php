@@ -3,6 +3,7 @@
 namespace App\Components\Page\Model;
 
 use App\Entity\Page;
+
 use Symfony\Component\Validator\Constraints as Assert;
 
 class PageModel
@@ -42,7 +43,7 @@ class PageModel
       $this->summary = $bodyData->getSummary();
       $this->body = $bodyData->getBody();
     }
-    $category = $data->getFieldCategory();
+    $category = $data->getCategory();
     if($category){
       $this->category = $category->getId();
     }
@@ -146,7 +147,7 @@ class PageModel
   }
 
   /**
-   * @return mixed
+   * @return Page
    */
   public function getPage()
   {

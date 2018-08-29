@@ -60,14 +60,15 @@ class PageData
   private $body;
 
   /**
-   * @ORM\OneToMany(targetEntity="Term", mappedBy="entities")
+   * @ORM\ManyToOne(targetEntity="Term")
+   * @ORM\JoinColumn(name="term_id", referencedColumnName="id")
    */
+
   private $category;
 
   public function __construct()
   {
     $this->body = new ArrayCollection();
-    $this->category = new ArrayCollection();
   }
 
 
@@ -201,27 +202,17 @@ class PageData
   }
 
   /**
-   * @return mixed
+   * @return Term
    */
   public function getCategory()
   {
     return $this->category;
   }
-
-  /**
-   * @param mixed $category
-   */
-  public function addCategory($category): void
-  {
-    $this->category[] = $category;
+  public function setCategory(Term $term){
+    $this->category = $term;
+    return $this;
   }
 
-  public function removeCategory($category){
-    $this->category->remove($category);
-  }
-  public function getFieldCategory(){
-    return $this->category->first();
-  }
 
   /**
    * @ORM\PrePersist

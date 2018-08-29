@@ -41,7 +41,6 @@ class Page {
   public function __construct()
   {
     $this->data = new ArrayCollection();
-    $this->language = CurrentLanguage::$language;
   }
 
   /**
@@ -96,21 +95,30 @@ class Page {
   public function getData(){
     return $this->data;
   }
+  public function getEntities(){
+    $entities = [];
+    foreach ($this->data->toArray() as $data){
+      $entities[$data->getLanguage()] = $data;
+    }
+    return $entities;
+  }
 
   /**
    * @param null $language
    * @return PageData
    */
-      public function getEntity( $language = null ){
-        if(is_null($language)){
-          $language = CurrentLanguage::$language;
-        }
-        $arr = $this->data->filter(function($entity) use ($language){
-          return $entity->getLanguage() == $language;
-        });
-        $entity = $arr->first();
-        if(!$entity){
+  public function getEntity( $language = null ){
+    if(is_null($language)){
+      $language = CurrentLanguage::$language;
+    }
+    $arr = $this->data->filter(function($entity) use ($language){
+      return $entity->getLanguage() == $language;
+    });
+    $entity = $arr->first();
+    if(!$entity){
       $entity = new PageData();
+      $entity->setLanguage($language);
+      $this->addData($entity);
     }
     return $entity;
   }

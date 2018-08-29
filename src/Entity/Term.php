@@ -30,7 +30,11 @@ class Term {
    */
   private $created;
 
-
+  /**
+   * @ORM\ManyToOne(targetEntity="PageData", inversedBy="category")
+   * @ORM\JoinColumn(name="entity_id", referencedColumnName="id")
+   */
+  private $entities;
 
 
 
@@ -103,4 +107,6 @@ class Term {
   public static function termList(){
     return ['term_one', 'term_two' , 'term_three'];
   }
+
+
 }

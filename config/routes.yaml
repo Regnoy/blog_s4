@@ -17,12 +17,22 @@ page_list_direct:
   controller:  App\Controller\PageController::list
 
 page_add:
-  path: /page/add
+  path: /{_locale}/page/add
   controller:  App\Controller\PageController::add
+  requirements:
+    _locale: '%app.locales%'
+
 
 page_view:
   path: /{_locale}/page/{id}
   controller:  App\Controller\PageController::view
+  requirements:
+    id: '\d+'
+    _locale: '%app.locales%'
+
+page_add_translation:
+  path: /{_locale}/page/{id}/translation
+  controller:  App\Controller\PageController::translation
   requirements:
     id: '\d+'
     _locale: '%app.locales%'

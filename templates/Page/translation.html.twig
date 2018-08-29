@@ -1,0 +1,31 @@
+{% extends 'page_default.html.twig' %}
+{% block page_title %}Add Translation{% endblock %}
+ {% block main %}
+   <div class="block block--page-translation">
+     <div class="block-content">
+
+       <div class="list">
+         {% for language in languages %}
+           {% set entity = null %}
+           {% set title = 'None' %}
+           {% set route = path('page_add', {'trans_lg' : language.language, 'trand_id' : page.id }) %}
+           {% set routeTitle = 'Add' %}
+           {% if page.entities[language.language] is defined %}
+             {% set entity = page.entities[language.language] %}
+             {% set title = entity.title %}
+             {% set route = path('page_edit', {'trans_lg' : language.language, 'id' : page.id }) %}
+             {% set routeTitle =  'Edit' %}
+           {% endif %}
+           {{ dump(route) }}
+           <div class="list-item">
+             Language: {{ language.name }}
+             Title: {{ title }}
+             Actions: <a href="{{ route }}">{{ routeTitle }}</a>
+           </div>
+
+         {% endfor %}
+       </div>
+     </div>
+   </div>
+
+ {% endblock %}

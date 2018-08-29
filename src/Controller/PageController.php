@@ -1,31 +1,26 @@
 <?php
 
-
 namespace App\Controller;
 
-
 use App\Components\Language\CurrentLanguage;
+use App\Components\Language\LanguageManager;
 use App\Components\Page\Form\PageForm;
 use App\Components\Page\Model\PageModel;
+use App\Components\Page\PageManager;
 use App\Entity\Comment;
-use App\Entity\User;
 use App\Forms\CommentForm;
 use App\Entity\Page;
 use App\Forms\PageDeleteForm;
-
 use App\Forms\SearchForm;
 use App\Voter\PageVoter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\Encoder\JsonEncode;
-use Symfony\Component\Serializer\Serializer;
 
 
 class PageController extends Controller {
@@ -82,8 +77,9 @@ class PageController extends Controller {
     ]);
   }
 
-  public function add( Request $request, FlashBagInterface $flashBag ){
+  public function add( Request $request, FlashBagInterface $flashBag, PageManager $pageManager ){
     $page = new Page();
+
     $pageModel = new PageModel();
     $pageModel->attachPage($page, CurrentLanguage::$language);
 
@@ -91,23 +87,14 @@ class PageController extends Controller {
       'entity_manager' => $this->getDoctrine()->getManager()
     ]);
     $form->handleRequest($request);
+    if($form->isSubmitted() && $form->isValid()){
+
+      $pageManager->save($form->getData());
+      return $this->redirectToRoute('page_list');
+    }
     return $this->render('Page/add.html.twig', [
       'form' => $form->createView()
     ]);
-
-//
-//    $form = $this->createForm(PageForm::class, $page );
-//    $form->handleRequest($request);
-//    if($form->isSubmitted()){
-//      $em = $this->getDoctrine()->getManager();
-//      $page->setUser($this->getUser());
-//      $em->persist($page);
-//
-//      $em->flush();
-//      $flashBag->add('success', 'Article is added:'. $page->getTitle());
-//      return $this->redirectToRoute('page_view', [ 'id' => $page->getId() ]);
-//    }
-
   }
 
   /**
@@ -119,9 +106,6 @@ class PageController extends Controller {
 //*
   public function edit($id, Request $request, FlashBagInterface $flashBag){
 //    $request = $this->get('request_stack')->getCurrentRequest();
-
-
-
     $em = $this->getDoctrine()->getManager();
     $repo = $em->getRepository(Page::class);
     $page = $repo->find($id);
@@ -255,6 +239,22 @@ class PageController extends Controller {
     $jsonResponse->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     $jsonResponse->setData($response);
     return $jsonResponse;
+  }
+  public function translation($id, LanguageManager $languageManager){
+    $languages = $languageManager->getLanguages();
+    $pageRepo = $this->getDoctrine()->getRepository(Page::class);
+    /** @var Page $page */
+    $page = $pageRepo->find($id);
+    if(!$page){
+      throw $this->createNotFoundException('The page does not exist');
+    }
+
+
+    return $this->render('Page/translation.html.twig',[
+
+      'page' => $page,
+      'languages' => $languages
+    ]);
   }
 
 }
