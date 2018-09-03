@@ -38,10 +38,9 @@ class PageModel
     $this->language = $language;
     $this->page = $page;
     $data = $page->getEntity($language);
-    if($language != $page->getLanguage()){
+    if($language != $page->getLanguage() && is_null($data->getId())){
       $data = $page->getEntity($page->getLanguage());
     }
-
     $this->id = $page->getId();
     $this->title = $data->getTitle();
     $bodyData = $data->getFieldBody();

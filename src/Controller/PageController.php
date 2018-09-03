@@ -81,9 +81,14 @@ class PageController extends Controller {
     $transLg = $request->query->get('trans_lg') ?? CurrentLanguage::$language;
     $trandId= $request->query->get('trand_id');
     $repo = $pageManager->getPageRepo();
+    /** @var Page $page */
     $page = $repo->find($trandId);
     if($page){
       $this->denyAccessUnlessGranted(PageVoter::EDIT, $page);
+      $entities = $page->getEntities();
+      if(isset($entities[$transLg])){
+        return $this->redirectToRoute('page_edit', ['id' => $page->getId(), 'trans_lg' => $transLg]);
+      }
     } else {
       $page = new Page();
     }
@@ -112,22 +117,26 @@ class PageController extends Controller {
    * @IsGranted("ROLE_USER", statusCode=404, message="Article not found")
    */
 //*
-  public function edit($id, Request $request, FlashBagInterface $flashBag){
+  public function edit($id, Request $request, FlashBagInterface $flashBag, PageManager $pageManager){
 //    $request = $this->get('request_stack')->getCurrentRequest();
-    $em = $this->getDoctrine()->getManager();
-    $repo = $em->getRepository(Page::class);
+    $transLg = $request->query->get('trans_lg') ?? CurrentLanguage::$language;
+    $repo = $pageManager->getPageRepo();
+    /** @var Page $page */
     $page = $repo->find($id);
     if(!$page)
       return $this->redirectToRoute('page_list');
 
     $this->denyAccessUnlessGranted(PageVoter::EDIT, $page);
+    $pageModel = new PageModel();
 
-    $form = $this->createForm(PageForm::class, $page );
+    $pageModel->attachPage($page, $transLg);
+    $form = $this->createForm(PageForm::class, $pageModel,[
+      'entity_manager' => $pageManager->getEm()
+    ] );
     $form->handleRequest($request);
-    if($form->isSubmitted()){
-      $em->persist($page);
-      $em->flush();
-      $flashBag->add('success', 'Article is edited:'. $page->getTitle());
+    if($form->isSubmitted() && $form->isValid()){
+      $pageManager->save($pageModel);
+      $flashBag->add('success', 'Article is edited:'. $page->getEntity($transLg)->getTitle());
       return $this->redirectToRoute('page_view', [ 'id' => $page->getId() ]);
     }
     return $this->render('Page/edit.html.twig', [

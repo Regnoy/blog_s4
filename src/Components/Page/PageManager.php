@@ -63,5 +63,14 @@ class PageManager
     return $this->languageManager;
   }
 
+  /**
+   * @return EntityManagerInterface
+   */
+  public function getEm(): EntityManagerInterface
+  {
+    return $this->em;
+  }
+
+
 
 }

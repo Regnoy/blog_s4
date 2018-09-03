@@ -44,10 +44,11 @@ page_comments:
     id: '\d+'
 
 page_edit:
-  path: /page/{id}/edit
+  path: /{_locale}/page/{id}/edit
   controller:  App\Controller\PageController::edit
   requirements:
     id: '\d+'
+    _locale: '%app.locales%'
 #
 page_delete:
   path: /page/{id}/delete
