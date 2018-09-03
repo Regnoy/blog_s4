@@ -137,7 +137,7 @@ class PageController extends Controller {
     if($form->isSubmitted() && $form->isValid()){
       $pageManager->save($pageModel);
       $flashBag->add('success', 'Article is edited:'. $page->getEntity($transLg)->getTitle());
-      return $this->redirectToRoute('page_view', [ 'id' => $page->getId() ]);
+      return $this->redirectToRoute('page_view', [ 'id' => $page->getId(), '_locale' => $transLg ]);
     }
     return $this->render('Page/edit.html.twig', [
       'form' => $form->createView()
