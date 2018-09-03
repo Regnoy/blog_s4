@@ -2,7 +2,9 @@
 
 namespace App\Components\Page;
 
+use App\Components\Language\LanguageManager;
 use App\Components\Page\Model\PageModel;
+use App\Entity\Page;
 use App\Entity\PageBody;
 use App\Entity\Term;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,13 +14,15 @@ class PageManager
 
   private $em;
 
-  public function __construct(EntityManagerInterface $entityManager)
+  private $languageManager;
+
+  public function __construct(EntityManagerInterface $entityManager, LanguageManager $languageManager)
   {
     $this->em = $entityManager;
+    $this->languageManager = $languageManager;
   }
 
   public function save(PageModel $pageModel){
-
     $data = $pageModel->getPage()->getEntity($pageModel->getLanguage());
     $data->setTitle( $pageModel->getTitle() );
     $bodyData = $data->getFieldBody();
@@ -28,7 +32,6 @@ class PageManager
     }
     $bodyData->setSummary($pageModel->getSummary());
     $bodyData->setBody($pageModel->getBody());
-
     $category = $pageModel->getCategory();
     $data->setCategory($category);
     $page = $pageModel->getPage();
@@ -44,4 +47,21 @@ class PageManager
     }
     return $terms;
   }
+
+  /**
+   * @return \App\Repository\PageRepository|\Doctrine\Common\Persistence\ObjectRepository
+   */
+  public function getPageRepo(){
+    return $this->em->getRepository(Page::class);
+  }
+
+  /**
+   * @return LanguageManager
+   */
+  public function getLanguageManager(): LanguageManager
+  {
+    return $this->languageManager;
+  }
+
+
 }

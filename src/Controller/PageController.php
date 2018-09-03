@@ -78,10 +78,18 @@ class PageController extends Controller {
   }
 
   public function add( Request $request, FlashBagInterface $flashBag, PageManager $pageManager ){
-    $page = new Page();
+    $transLg = $request->query->get('trans_lg') ?? CurrentLanguage::$language;
+    $trandId= $request->query->get('trand_id');
+    $repo = $pageManager->getPageRepo();
+    $page = $repo->find($trandId);
+    if($page){
+      $this->denyAccessUnlessGranted(PageVoter::EDIT, $page);
+    } else {
+      $page = new Page();
+    }
 
     $pageModel = new PageModel();
-    $pageModel->attachPage($page, CurrentLanguage::$language);
+    $pageModel->attachPage($page, $transLg);
 
     $form = $this->createForm(PageForm::class, $pageModel, [
       'entity_manager' => $this->getDoctrine()->getManager()

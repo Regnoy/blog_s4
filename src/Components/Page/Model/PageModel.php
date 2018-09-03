@@ -11,6 +11,8 @@ class PageModel
 
   private $id;
 
+  private $pageId;
+
   private $language;
 
   /**
@@ -34,7 +36,11 @@ class PageModel
 
   public function attachPage(Page $page , $language){
     $this->language = $language;
+    $this->page = $page;
     $data = $page->getEntity($language);
+    if($language != $page->getLanguage()){
+      $data = $page->getEntity($page->getLanguage());
+    }
 
     $this->id = $page->getId();
     $this->title = $data->getTitle();
@@ -47,7 +53,7 @@ class PageModel
     if($category){
       $this->category = $category->getId();
     }
-    $this->page = $page;
+
   }
 
   /**
