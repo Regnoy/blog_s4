@@ -33,14 +33,20 @@ class Page {
   private $data;
 
   /**
-   * @ORM\ManyToOne(targetEntity="\App\Entity\User")
+   * @ORM\ManyToOne(targetEntity="User")
    * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
    */
   private $user;
 
+  /**
+   * @ORM\OneToMany(targetEntity="Comment", mappedBy="page", cascade={"persist", "remove"})
+   */
+  private $comments;
+
   public function __construct()
   {
     $this->data = new ArrayCollection();
+    $this->comments = new ArrayCollection();
   }
 
   /**
@@ -111,6 +117,7 @@ class Page {
     if(is_null($language)){
       $language = CurrentLanguage::$language;
     }
+
     $arr = $this->data->filter(function($entity) use ($language){
       return $entity->getLanguage() == $language;
     });
@@ -129,4 +136,24 @@ class Page {
   {
     $this->language = CurrentLanguage::$language;
   }
+
+  public function addComment(Comment $comment) : void{
+    $comment->setPage($this);
+    $this->comments[] = $comment;
+  }
+
+  public function removeComment(Comment $comment) : void{
+    $this->comments->remove($comment);
+  }
+
+  /**
+   * @return ArrayCollection
+   */
+  public function getComments() : ArrayCollection
+  {
+    return $this->comments;
+  }
+
+
+
 }

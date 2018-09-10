@@ -6,29 +6,30 @@
       <div class="fields fields-top">
         <div class="field field-body">{{ page_data.fieldBody.body }}</div>
         <div class="list-link">
-          {#{% if page.category %}#}
-          {#<div class="list-link-item page-category">{{ page.category.name }}</div>#}
-          {#{% endif %}#}
+          {% if page_data.category %}
+            {% set category = "term." ~ page_data.category.machineName %}
+          <div class="list-link-item page-category"> {{ category|trans }}</div>
+          {% endif %}
           <div class="list-link-item page-created">{{ page_data.created|date('d-m-Y') }}</div>
         </div>
       </div>
-      {#<div class="field field-comments">#}
-        {#<div class="comment-preview">#}
-          {#<h2 class="comment-title">Comments</h2>#}
-          {#{{ form(comment_form) }}#}
-          {#<div class="list">#}
-            {#{% for item in page_comments %}#}
-              {#<div class="list-item">#}
-                {#{{ include('Comments/ViewMode/teaser.html.twig', {'item' : item }) }}#}
-                {#<ul>#}
-                  {#<li><a href="{{ path('comment_edit', { 'id' : item.id }) }}">Edit</a></li>#}
-                  {#<li><a href="{{ path('comment_delete', { 'id' : item.id }) }}">Delete</a></li>#}
-                {#</ul>#}
-              {#</div>#}
-            {#{% endfor %}#}
-          {#</div>#}
-        {#</div>#}
-      {#</div>#}
+      <div class="field field-comments">
+        <div class="comment-preview">
+          <h2 class="comment-title">Comments</h2>
+          {{ form(comment_form) }}
+          <div class="list">
+            {% for item in page_comments %}
+              <div class="list-item">
+                {{ include('Comments/ViewMode/teaser.html.twig', {'item' : item }) }}
+                <ul>
+                  <li><a href="{{ path('comment_edit', { 'id' : item.id }) }}">Edit</a></li>
+                  <li><a href="{{ path('comment_delete', { 'id' : item.id }) }}">Delete</a></li>
+                </ul>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
 
     </div>
   </article>

@@ -62,7 +62,6 @@ class PageController extends Controller {
       /** @var Comment $comment */
       $comment = $commentForm->getData();
       $comment->setPage($page);
-
       $em->persist($comment);
       $em->flush();
       return $this->redirectToRoute('page_view', ['id' => $page->getId()]);
