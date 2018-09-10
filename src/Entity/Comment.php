@@ -12,6 +12,7 @@ use PageBundle\Entity\Page;
  * @package PageBundle\Entity
  * @ORM\Entity(repositoryClass="App\Repository\CommentRepository")
  * @ORM\Table(name="comment")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Comment {
 
@@ -44,6 +45,11 @@ class Comment {
    * @ORM\Column(type="datetime")
    */
   private $created;
+
+  /**
+   * @ORM\Column(type="string", length=191, nullable=true)
+   */
+  private $marking;
 
   public function  __construct(){
     $this->created = new \DateTime();
@@ -147,5 +153,12 @@ class Comment {
 
     $this->user = $user;
   }
-
+  /**
+   * @ORM\PrePersist
+   */
+  public function setPrePersistCommentMarking()
+  {
+    if(!$this->marking)
+      $this->marking = 'unpublish';
+  }
 }

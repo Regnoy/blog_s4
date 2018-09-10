@@ -16,3 +16,19 @@ framework:
         moderate:
           from: publish
           to: moderate
+    comment:
+      type: 'state_machine'
+      supports:
+      - App\Entity\Comment
+      initial_place: unpublish
+      places:
+      - unpublish
+      - publish
+      - ignore
+      transitions:
+        published:
+          from: [ignore, unpublish]
+          to: publish
+        ignore:
+          from: [unpublish, publish]
+          to: ignore
