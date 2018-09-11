@@ -154,6 +154,17 @@ class Page {
     return $this->comments;
   }
 
+  public function getCommentPublished(){
+    return $this->comments->filter(function($commnet){
+      return $commnet->getMarking() == 'publish';
+    });
+  }
+
+  public function getCommentUnpublished(){
+    return $this->comments->filter(function($commnet){
+      return $commnet->getMarking() == 'unpublish';
+    });
+  }
 
 
 }

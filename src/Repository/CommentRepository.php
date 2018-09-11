@@ -11,8 +11,9 @@ class CommentRepository extends EntityRepository {
 
   public function findLastComments( Page $page, $limit = 20 ){
     $qry = $this->createQueryBuilder('c');
-    $qry->where('c.page = :page');
+    $qry->where('c.page = :page and c.marking = :marking');
     $qry->setParameter('page', $page);
+    $qry->setParameter('marking', 'publish');
     $qry->setMaxResults($limit);
     $qry->orderBy('c.id' , 'DESC');
     return $qry->getQuery()->getResult();

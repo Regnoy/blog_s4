@@ -13,6 +13,7 @@ use App\Entity\Page;
 use App\Forms\PageDeleteForm;
 use App\Forms\SearchForm;
 use App\Voter\PageVoter;
+use App\Voter\UserVoter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,6 +22,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Workflow\Exception\TransitionException;
+use Symfony\Component\Workflow\Registry;
 
 
 class PageController extends Controller {
@@ -42,7 +45,7 @@ class PageController extends Controller {
     ]);
   }
 
-  public function view($id, Request $request, FlashBagInterface $flashBag){
+  public function view($id, Request $request, FlashBagInterface $flashBag, Registry $workflows){
     //EN, RU
 //    CurrentLanguage::$language = 'fr';
     $pageRepo = $this->getDoctrine()->getRepository(Page::class);
@@ -62,8 +65,15 @@ class PageController extends Controller {
       /** @var Comment $comment */
       $comment = $commentForm->getData();
       $comment->setPage($page);
+      $workflow = $workflows->get($comment);
+      try {
+        $workflow->apply($comment, 'published');
+      }catch (TransitionException  $exception) {
+//        var_dump($exception->getMessage());
+      }
+
       $em->persist($comment);
-      $em->flush();
+       $em->flush();
       return $this->redirectToRoute('page_view', ['id' => $page->getId()]);
     }
     $commentRepo = $em->getRepository(Comment::class);

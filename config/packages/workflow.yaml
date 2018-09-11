@@ -19,16 +19,16 @@ framework:
     comment:
       type: 'state_machine'
       supports:
-      - App\Entity\Comment
+        - App\Entity\Comment
       initial_place: unpublish
       places:
-      - unpublish
-      - publish
-      - ignore
+        - unpublish
+        - publish
+        - ignore
       transitions:
         published:
           from: [ignore, unpublish]
           to: publish
-        ignore:
+        ignoreв:
           from: [unpublish, publish]
           to: ignore

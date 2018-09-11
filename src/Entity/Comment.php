@@ -53,6 +53,7 @@ class Comment {
 
   public function  __construct(){
     $this->created = new \DateTime();
+    $this->marking = 'unpublish';
   }
 
     /**
@@ -153,12 +154,30 @@ class Comment {
 
     $this->user = $user;
   }
+
   /**
-   * @ORM\PrePersist
+   * @return mixed
    */
-  public function setPrePersistCommentMarking()
+  public function getMarking()
   {
-    if(!$this->marking)
-      $this->marking = 'unpublish';
+    return $this->marking;
   }
+
+  /**
+   * @param mixed $marking
+   */
+  public function setMarking($marking): void
+  {
+    $this->marking = $marking;
+  }
+
+
+//  /**
+//   * @ORM\PrePersist
+//   */
+//  public function setPrePersistCommentMarking()
+//  {
+//    if(!$this->marking)
+//      $this->marking = 'unpublish';
+//  }
 }
