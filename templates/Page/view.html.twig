@@ -13,6 +13,21 @@
           <div class="list-link-item page-created">{{ page_data.created|date('d-m-Y') }}</div>
         </div>
       </div>
+      <div class="field field-comment-workflow">
+        <div class="comment-preview">
+          <h2 class="comment-title">Comments Unpublished</h2>
+          <div class="list">
+            {% for item in page_data.page.commentUnpublished %}
+              <div class="list-item">
+                {{ include('Comments/ViewMode/teaser.html.twig', {'item' : item }) }}
+                <ul>
+                  <li><a href="{{ path('comment_view', { 'id' : item.id }) }}">Workflow</a></li>
+                </ul>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
       <div class="field field-comments">
         <div class="comment-preview">
           <h2 class="comment-title">Comments</h2>

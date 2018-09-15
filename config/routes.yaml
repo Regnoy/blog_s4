@@ -102,6 +102,12 @@ comment_delete:
   requirements:
     id: '\d+'
 
+comment_view:
+  path: /{_locale}/comment/{id}
+  defaults: { _controller: App\Controller\CommentController::view }
+  requirements:
+    id: '\d+'
+    _locale: '%app.locales%'
 
 #user
 

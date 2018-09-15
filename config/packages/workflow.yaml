@@ -29,6 +29,6 @@ framework:
         published:
           from: [ignore, unpublish]
           to: publish
-        ignoreв:
+        ignored:
           from: [unpublish, publish]
           to: ignore

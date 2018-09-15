@@ -1,0 +1,20 @@
+{% extends 'page_default.html.twig' %}
+{% block page_title %}Edit Comment{% endblock %}
+ {% block main %}
+   <div class="block block--comment-view comment-{{ comment.id }}">
+     <div class="block-content">
+       <div class="comment-view">
+         <h2 class="comment-title">Comments Handler</h2>
+         <div class="list">
+           <div class="list-item">
+             {{ include('Comments/ViewMode/teaser.html.twig', {'item' : comment }) }}
+           </div>
+         </div>
+         {% if comment.marking == 'unpublish' %}
+           {{ form(form) }}
+         {% endif %}
+       </div>
+     </div>
+
+   </div>
+ {% endblock %}
