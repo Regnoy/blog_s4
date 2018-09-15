@@ -59,7 +59,6 @@ class CommentController extends Controller {
   }
 
   public function view($id, Request $request, Registry $workflows){
-    //EN, RU){
     $em = $this->getDoctrine()->getManager();
     $repo = $em->getRepository(Comment::class);
     /** @var Comment $comment */
@@ -70,9 +69,6 @@ class CommentController extends Controller {
     $form = $this->createForm( CommentViewForm::class );
     $form->handleRequest($request);
     if($form->isSubmitted()){
-//      $page = $comment->getPage();
-//      $em->remove($comment);
-//      $em->flush();
       $data = $form->getData();
       $workflow = $workflows->get($comment);
       try {
