@@ -6,6 +6,8 @@ namespace App\Entity;
 use App\Components\Language\CurrentLanguage;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Uv\Core\Entity\EntityIdTrait;
+use Uv\Core\Entity\EntityUpdateTrait;
 
 
 /**
@@ -18,12 +20,8 @@ use Doctrine\ORM\Mapping as ORM;
 class PageData
 {
 
-  /**
-   * @ORM\Column(type="integer")
-   * @ORM\Id
-   * @ORM\GeneratedValue(strategy="AUTO")
-   */
-  private $id;
+  use EntityIdTrait;
+  use EntityUpdateTrait;
 
   /**
    * @ORM\ManyToOne(targetEntity="Page", inversedBy="data")
@@ -46,10 +44,6 @@ class PageData
   private $created;
 
   /**
-   * @ORM\Column(type="datetime")
-   */
-  private $updated;
-  /**
    * @ORM\Column(type="string", length=191, nullable=true)
    */
   private $marking;
@@ -71,14 +65,6 @@ class PageData
     $this->body = new ArrayCollection();
   }
 
-
-  /**
-   * @return mixed
-   */
-  public function getId()
-  {
-    return $this->id;
-  }
 
   /**
    * @return Page
@@ -147,22 +133,6 @@ class PageData
   /**
    * @return mixed
    */
-  public function getUpdated()
-  {
-    return $this->updated;
-  }
-
-  /**
-   * @param mixed $updated
-   */
-  public function setUpdated($updated): void
-  {
-    $this->updated = $updated;
-  }
-
-  /**
-   * @return mixed
-   */
   public function getMarking()
   {
     return $this->marking;
@@ -222,9 +192,7 @@ class PageData
     if(is_null($this->language)){
       $this->language = $this->getPage()->getLanguage();
     }
-
     $this->created = new \DateTime();
-    $this->updated = new \DateTime();
     $this->marking = 'draft';
   }
 

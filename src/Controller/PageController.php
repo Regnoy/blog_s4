@@ -88,7 +88,7 @@ class PageController extends Controller {
 
   public function add( Request $request, FlashBagInterface $flashBag, PageManager $pageManager ){
     $transLg = $request->query->get('trans_lg') ?? CurrentLanguage::$language;
-    $trandId= $request->query->get('trand_id');
+    $trandId= $request->query->get('trand_id') ?? 0;
     $repo = $pageManager->getPageRepo();
     /** @var Page $page */
     $page = $repo->find($trandId);

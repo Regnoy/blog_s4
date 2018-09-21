@@ -47,7 +47,9 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "App\\": "src/",
+            "Uv\\File\\": "Uv/File/src/",
+            "Uv\\Core\\": "Uv/Core/src/"
         }
     },
     "autoload-dev": {
