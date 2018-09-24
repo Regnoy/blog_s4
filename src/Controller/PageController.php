@@ -110,7 +110,6 @@ class PageController extends Controller {
     ]);
     $form->handleRequest($request);
     if($form->isSubmitted() && $form->isValid()){
-
       $pageManager->save($form->getData());
       return $this->redirectToRoute('page_list');
     }

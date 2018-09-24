@@ -27,6 +27,8 @@ class PageModel
    */
   private $body;
 
+  private $image;
+
   /**
    * @Assert\NotBlank()
    */
@@ -158,5 +160,22 @@ class PageModel
   {
     return $this->page;
   }
+
+  /**
+   * @return mixed
+   */
+  public function getImage()
+  {
+    return $this->image;
+  }
+
+  /**
+   * @param mixed $image
+   */
+  public function setImage($image): void
+  {
+    $this->image = $image;
+  }
+
 
 }

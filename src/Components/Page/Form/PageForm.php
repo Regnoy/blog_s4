@@ -8,6 +8,7 @@ use App\Entity\Term;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -50,6 +51,9 @@ class PageForm extends AbstractType
     ]);
     $builder->add('body', TextareaType::class, [
       'label' => 'Body'
+    ]);
+    $builder->add('image', FileType::class, [
+      'label' => 'Upload Image'
     ]);
     $terms = $entityManager->getRepository(Term::class)->findAll();
 
