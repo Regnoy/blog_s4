@@ -5,6 +5,7 @@
 /public/bundles/
 /var/
 /vendor/
+/public/files/
 ###< symfony/framework-bundle ###
 
 ###> symfony/webpack-encore-pack ###

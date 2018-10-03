@@ -26,7 +26,16 @@ class PageModel
    * @Assert\NotBlank()
    */
   private $body;
-
+  /**
+   * @Assert\Image(
+   *  mimeTypes = {"image/jpeg", "image/png", "image/jpg"},
+   *  maxSize = "4Mi",
+   *  minWidth = "200",
+   *  minHeight = "200",
+   *  maxSizeMessage = "Image file size exceeds 4MB.",
+   *  mimeTypesMessage = "Invalid file format. Allowed file formats: JPG, JPEG, PNG."
+   * )
+   */
   private $image;
 
   /**

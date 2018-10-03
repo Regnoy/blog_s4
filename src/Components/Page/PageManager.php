@@ -8,6 +8,7 @@ use App\Entity\Page;
 use App\Entity\PageBody;
 use App\Entity\Term;
 use Doctrine\ORM\EntityManagerInterface;
+use Uv\File\FileAssistant;
 
 class PageManager
 {
@@ -16,10 +17,12 @@ class PageManager
 
   private $languageManager;
 
-  public function __construct(EntityManagerInterface $entityManager, LanguageManager $languageManager)
+  private $fileAssistant;
+  public function __construct(EntityManagerInterface $entityManager, LanguageManager $languageManager, FileAssistant $fileAssistant)
   {
     $this->em = $entityManager;
     $this->languageManager = $languageManager;
+    $this->fileAssistant = $fileAssistant;
   }
 
   public function save(PageModel $pageModel){
@@ -35,6 +38,16 @@ class PageManager
     $category = $pageModel->getCategory();
     $data->setCategory($category);
     $page = $pageModel->getPage();
+    if($pageModel->getImage()){
+      $file = $this->fileAssistant->prepareUploadFile($pageModel->getImage(), 'page/'.$this->fileAssistant->getFolderMonthYear());
+      $file->setStatus(1);
+      $dataImage = $data->getImage();
+      if($dataImage){
+        $this->em->remove($dataImage);
+      }
+      $data->setImage($file);//id == null,
+    }
+
     $this->em->persist($page);
     $this->em->flush();
 

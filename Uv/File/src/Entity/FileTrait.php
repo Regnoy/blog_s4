@@ -70,6 +70,17 @@ trait FileTrait
     $this->status = FileBaseInterface::TEMPORARY;
   }
 
+  /**
+   * Return folder of existed file in system
+   */
+  public function getFolder(){
+    $url = $this->getUrl();
+    $url = str_replace('public://', '', $url);
+    $url = str_replace('private://', '', $url);
+    $url = explode('/',$url);
+    array_pop($url);
+    return implode('/', $url);
+  }
 
   public function isPrivate(){
     return !is_null($this->handler);

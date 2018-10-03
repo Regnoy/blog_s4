@@ -59,6 +59,11 @@ class PageData
    */
 
   private $category;
+  /**
+   * @ORM\OneToOne(targetEntity="Uv\File\Entity\File", cascade={"persist", "remove"})
+   * @ORM\JoinColumn(name="image_fid", referencedColumnName="id")
+   */
+  private $image;
 
   public function __construct()
   {
@@ -195,6 +200,23 @@ class PageData
     $this->created = new \DateTime();
     $this->marking = 'draft';
   }
+
+  /**
+   * @return mixed
+   */
+  public function getImage()
+  {
+    return $this->image;
+  }
+
+  /**
+   * @param mixed $image
+   */
+  public function setImage($image): void
+  {
+    $this->image = $image;
+  }
+
 
 
 }

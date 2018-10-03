@@ -86,6 +86,13 @@ class PageController extends Controller {
     ]);
   }
 
+  /**
+   * @param Request $request
+   * @param FlashBagInterface $flashBag
+   * @param PageManager $pageManager
+   * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+   * @IsGranted("ROLE_USER")
+   */
   public function add( Request $request, FlashBagInterface $flashBag, PageManager $pageManager ){
     $transLg = $request->query->get('trans_lg') ?? CurrentLanguage::$language;
     $trandId= $request->query->get('trand_id') ?? 0;
