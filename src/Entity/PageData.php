@@ -5,9 +5,11 @@ namespace App\Entity;
 
 use App\Components\Language\CurrentLanguage;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Uv\Core\Entity\EntityIdTrait;
 use Uv\Core\Entity\EntityUpdateTrait;
+use Uv\File\Entity\File;
 
 
 /**
@@ -215,6 +217,19 @@ class PageData
   public function setImage($image): void
   {
     $this->image = $image;
+  }
+
+  public function removeBody(PageBody $body): self
+  {
+      if ($this->body->contains($body)) {
+          $this->body->removeElement($body);
+          // set the owning side to null (unless already changed)
+          if ($body->getEntity() === $this) {
+              $body->setEntity(null);
+          }
+      }
+
+      return $this;
   }
 
 

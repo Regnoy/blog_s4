@@ -70,10 +70,11 @@ term_add:
   defaults : { _controller: App\Controller\TermController::add }
 
 term_view:
-  path: /term/{id}
+  path: /{_locale}/term/{id}
   defaults : { _controller: App\Controller\TermController::view }
   requirements:
     id: '\d+'
+    _locale: '%app.locales%'
 
 term_edit:
   path: /term/{id}/edit

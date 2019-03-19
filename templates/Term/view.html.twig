@@ -3,8 +3,9 @@
 {% block main %}
   <div class="block block--term-view">
     <div class="block-content">
-      <h2 class="field field-name">{{ term.name }}</h2>
-      <div class="field field-description">{{ term.description }}</div>
+      {% set termTrans = 'term.' ~ term.machineName  %}
+      <h2 class="field field-name">{{ termTrans | trans }}</h2>
+      {#<div class="field field-description">{{ term.description }}</div>#}
       <div class="field field-pages">
         <div class="list list--page-list">
           {% for page in pages %}

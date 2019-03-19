@@ -4,6 +4,7 @@
 namespace App\Repository;
 
 
+use App\Entity\Page;
 use Doctrine\ORM\EntityRepository;
 use App\Entity\Term;
 
@@ -17,9 +18,16 @@ class PageRepository extends EntityRepository {
     return $qry->getQuery()->getResult();
   }
 
+    /**
+     * @param Term $term
+     * @param int $page
+     * @param int $limit
+     * @return mixed
+     * @deprecated
+     */
   public function findByTerms( Term $term, $page = 1, $limit = 10 ){
 
-    $qry = $this->createQueryBuilder('p');
+    $qry = $this->createQueryBuilder('p', Page::class);
     $qry->where('p.category = :category');
     $qry->setParameter('category', $term);
     $qry->setMaxResults($limit);

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\Components\Page\PageManagerRepository;
 use App\Entity\Page;
 use App\Entity\Term;
 use App\Forms\TermDeleteForm;
@@ -12,6 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 
 class TermController extends Controller {
+
+
 
   public function list(){
     $terms = $this->getDoctrine()->getRepository(Term::class)->findAll();
@@ -38,15 +41,17 @@ class TermController extends Controller {
     ]);
 
   }
-  public function view($id){
+  public function view($id, PageManagerRepository $pageManagerRepository){
     $repo = $this->getDoctrine()->getRepository(Term::class);
     /** @var Term $term */
     $term = $repo->find($id);
     if(!$term){
       throw $this->createNotFoundException('The term does not exist');
     }
-    $pageRepo = $this->getDoctrine()->getRepository(Page::class);
-    $pages = $pageRepo->findByTerms($term);
+
+
+    $pages = $pageManagerRepository->findByTerms($term);
+
     return $this->render('Term/view.html.twig',[
       'term' => $term,
       'pages' => $pages

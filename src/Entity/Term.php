@@ -29,12 +29,12 @@ class Term {
    * @ORM\Column(type="datetime")
    */
   private $created;
-
-  /**
-   * @ORM\ManyToOne(targetEntity="PageData", inversedBy="category")
-   * @ORM\JoinColumn(name="entity_id", referencedColumnName="id")
-   */
-  private $entities;
+//
+//  /**
+//   * @ORM\ManyToOne(targetEntity="PageData", inversedBy="category")
+//   * @ORM\JoinColumn(name="entity_id", referencedColumnName="id")
+//   */
+//  private $entities;
 
 
 
