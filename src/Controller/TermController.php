@@ -48,8 +48,6 @@ class TermController extends Controller {
     if(!$term){
       throw $this->createNotFoundException('The term does not exist');
     }
-
-
     $pages = $pageManagerRepository->findByTerms($term);
 
     return $this->render('Term/view.html.twig',[
