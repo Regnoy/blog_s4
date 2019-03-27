@@ -4,6 +4,7 @@
   <article class="block block--page-view page-view page-{{ page_data.page.id }}">
     <div class="block-content">
       <div class="fields fields-top">
+        <div class="field field-image">{{ page_data.image|image_style('480x480-crop') }}</div>
         <div class="field field-body">{{ page_data.fieldBody.body }}</div>
         <div class="list-link">
           {% if page_data.category %}

@@ -6,6 +6,12 @@ services:
   Uv\File\FileAssistant:
     autowire: true
 
+  Uv\File\Components\Image\ImageStyle:
+    autowire: true
+
+  Uv\File\Twig\ImageStyleExtension:
+    autowire: true
+
   uv.file.file_assistant:
     alias: Uv\File\FileAssistant
     public: true
