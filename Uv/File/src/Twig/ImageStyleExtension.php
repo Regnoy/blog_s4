@@ -28,7 +28,10 @@ class ImageStyleExtension extends AbstractExtension
 
   public function formatImageStyle(File $file, $image_style)
   {
-
-    return "<img>".$image_style."</img>";
+    $image = $this->imageStyle->styleImage($file, $image_style);
+    if(is_null($image)){
+      return '';
+    }
+    return "<img src='".$image."'/>";
   }
 }

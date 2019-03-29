@@ -1,0 +1,63 @@
+150_150_crop:
+  name: "150 150 crop"
+  style:
+    crop:
+      action: scale_crop
+      width: 150
+      height: 150
+
+480_480_crop:
+  name: "480 480 crop"
+  style:
+    crop:
+      action: scale_crop
+      width: 480
+      height: 480
+
+large:
+  name: "Large max(1920x1080)"
+  style:
+    default:
+      action : ~
+      width: 1920
+      height: 1080
+
+670_480_crop:
+  name: "670 480 crop"
+  style:
+    default:
+      action : scale_crop
+      width: 670
+      height: 480
+
+670_450_crop:
+  name: "670 450 crop"
+  style:
+    default:
+      action : scale_crop
+      width: 670
+      height: 450
+
+200_200_crop:
+  name: "200 200 crop"
+  style:
+    default:
+      action : scale_crop
+      width: 200
+      height: 200
+
+640_400_crop:
+  name: "640 400 crop"
+  style:
+    default:
+      action : scale_crop
+      width: 640
+      height: 400
+
+480_390_crop:
+  name: "480 390 crop"
+  style:
+    default:
+      action : scale_crop
+      width: 480
+      height: 390

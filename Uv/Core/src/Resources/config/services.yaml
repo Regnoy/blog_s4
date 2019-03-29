@@ -1,0 +1,8 @@
+#services:
+#  _defaults:
+#    public: false
+#    autoconfigure: true
+#    autowire: true
+#
+#  Uv\Core\Components\Utils\SchemaReader:
+#    autowire: true

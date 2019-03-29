@@ -31,7 +31,7 @@ class PageController extends Controller {
   public function list( Request $request ){
     $pageRepo = $this->getDoctrine()->getRepository(Page::class);
     $pager = $request->query->get('page') ? $request->query->get('page') : 1;
-    $limit = 2;
+    $limit = 10;
 
     $pages = $pageRepo->findPages($pager, $limit);
     $pager = [

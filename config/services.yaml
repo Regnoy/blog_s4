@@ -28,5 +28,8 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    App\Components\User\Provider\UserProvider:
+    App\Components\Users\Provider\UserProvider:
+        autowire: true
+
+    Uv\Core\Components\Utils\SchemaReader:
         autowire: true
