@@ -155,7 +155,8 @@ class PageController extends Controller {
       return $this->redirectToRoute('page_view', [ 'id' => $page->getId(), '_locale' => $transLg ]);
     }
     return $this->render('Page/edit.html.twig', [
-      'form' => $form->createView()
+      'form' => $form->createView(),
+	    'page_data' => $page->getEntity()
     ]);
   }
   public function remove($id, Request $request, SessionInterface $session){

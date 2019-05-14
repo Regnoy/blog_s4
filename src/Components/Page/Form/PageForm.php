@@ -46,7 +46,8 @@ class PageForm extends AbstractType
       'disabled' => $isDiabledLanguage
     ]);
     $builder->add('image', FileType::class, [
-      'label' => 'Upload Image'
+      'label' => 'Upload Image',
+	    'required' => false
     ]);
     //PageBodyType::Class
     $builder->add('summary', TextareaType::class, [

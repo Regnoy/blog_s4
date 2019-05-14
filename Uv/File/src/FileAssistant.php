@@ -59,7 +59,7 @@ class FileAssistant implements FileAssistantInterface {
   }
   public function webUrl(File $file, $absolute = false){
     if( $file->isPrivate() ){
-      $url = str_replace("private://", '/'.static::PUBLIC_FOLDER.'/', $file->getUrl());
+      $url = str_replace("private://", '/'.static::PRIVATE_FOLDER.'/', $file->getUrl());
     } else {
       $url = str_replace("public://", '/'.static::PUBLIC_FOLDER.'/', $file->getUrl());
     }

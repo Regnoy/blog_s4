@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Components\Comments\Form\CommentViewForm;
 use App\Entity\Comment;
 
+use App\Forms\CommentDeleteForm;
 use App\Voter\PageVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +14,7 @@ use Symfony\Component\Workflow\Registry;
 
 class CommentController extends Controller {
 
-  public function editAction($id, Request $request){
+  public function edit($id, Request $request){
     $em = $this->getDoctrine()->getManager();
     $repo = $em->getRepository('CommentBundle:Comment');
     $comment = $repo->find($id);
@@ -32,10 +33,11 @@ class CommentController extends Controller {
     ]);
   }
 
-  public function removeAction($id, Request $request){
+  public function remove($id, Request $request){
     $em = $this->getDoctrine()->getManager();
-    $repo = $em->getRepository('CommentBundle:Comment');
+    $repo = $em->getRepository(Comment::class);
     $comment = $repo->find($id);
+
     if(!$comment)
       return $this->redirectToRoute('page_list');
 
@@ -48,12 +50,12 @@ class CommentController extends Controller {
       $page = $comment->getPage();
       $em->remove($comment);
       $em->flush();
-
+//
       return $this->redirectToRoute('page_view',[
-        'page' => $page->getId()
+        'id' => $page->getId()
       ]);
     }
-    return $this->render('CommentBundle::delete.html.twig', [
+    return $this->render('Comments/delete.html.twig', [
       'form' => $form->createView()
     ]);
   }

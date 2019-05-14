@@ -34,15 +34,20 @@ class SchemaReader {
       }catch (\Exception $e){
         continue;
       }
-      $finder = new Finder();
-      $finder->files()->in($path);
-      foreach ($finder as $file){
-        $fileName = $file->getBasename('.yml');
-        $schema = Yaml::parse(file_get_contents($path."/".$fileName.".yml"));
-        $convertedArray = Common::convertArrayToSubArrays(explode('.',$fileName), $schema);
-        $this->schema = array_merge_recursive($this->schema, $convertedArray);
-      }
+			$this->analizeFile($path);
     }
+    $this->analizeFile($this->kernel->getProjectDir().'/src/config/schema');
+  }
+
+  private function analizeFile($path){
+	  $finder = new Finder();
+	  $finder->files()->in($path);
+	  foreach ($finder as $file){
+		  $fileName = $file->getBasename('.yml');
+		  $schema = Yaml::parse(file_get_contents($path."/".$fileName.".yml"));
+		  $convertedArray = Common::convertArrayToSubArrays(explode('.',$fileName), $schema);
+		  $this->schema = array_merge_recursive($this->schema, $convertedArray);
+	  }
   }
   public function getKernel(){
     return $this->kernel;

@@ -46,3 +46,15 @@ form{
     }
   }
 }
+.lt-form-image-row{
+  display: flex;
+  align-items: center;
+  .lt-r{
+    &--left{
+      margin-right: 20px;
+    }
+    &--right{
+      flex: 1;
+    }
+  }
+}

@@ -3,7 +3,20 @@
 {% block main %}
   <div class="block block--page-edit">
     <div class="block-content">
-      {{ form(form) }}
+      {{ form_start(form) }}
+      {{ form_row(form.title) }}
+      {{ form_row(form.language) }}
+      <div class="lt lt-form-image-row">
+          <div class="lt-r lt-r--left">
+              {% if page_data.image is not null %}
+                  <div class="field field-image">{{ page_data.image|image_style('100_100_crop') }}</div>
+              {% endif %}
+          </div>
+          {{ form_row(form.image) }}
+      </div>
+      {#{{ form_widget(form) }}#}
+      {{ form_end(form) }}
+
     </div>
   </div>
 

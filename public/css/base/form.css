@@ -10,3 +10,7 @@ form .form-row input::-webkit-input-placeholder, form .form-row textarea::-webki
 form .type-birthday > div { display: -webkit-flex; display: flex; -webkit-flex-direction: row; flex-direction: row; }
 form .type-birthday > div > select { width: calc( ( 100% - 10px ) / 2 ); margin-right: 10px; }
 form .type-birthday > div > select:last-child { margin-right: 0; }
+
+.lt-form-image-row { display: flex; align-items: center; }
+.lt-form-image-row .lt-r--left { margin-right: 20px; }
+.lt-form-image-row .lt-r--right { flex: 1; }

@@ -109,6 +109,7 @@
     &-top{
       background-color: $white;
       padding: 20px;
+      @include pie-clearfix;
       .list-link{
         margin-top: 20px;
         @include display-flex;
@@ -123,6 +124,13 @@
           }
         }
       }
+    }
+  }
+  .field{
+    &-image{
+      float: left;
+      margin-bottom: 20px;
+      margin-right: 20px;
     }
   }
 }

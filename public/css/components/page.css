@@ -22,10 +22,12 @@
 .block-category-list .menu a { position: relative; text-transform: uppercase; margin-left: 30px; font-size: 12px; }
 .block-category-list .menu a:before { position: absolute; content: ""; left: -20px; top: 0; width: 14px; height: 14px; margin-top: 1px; line-height: 14px; vertical-align: text-top; background-image: url('../../../images/glyphicons-halflings.png'); background-position: 0 -95px; }
 
-.page-view .fields-top { background-color: #ffffff; padding: 20px; }
+.page-view .fields-top { background-color: #ffffff; padding: 20px; *zoom: 1; }
+.page-view .fields-top:after { content: ""; display: table; clear: both; }
 .page-view .fields-top .list-link { margin-top: 20px; display: -webkit-flex; display: flex; -webkit-flex-direction: row; flex-direction: row; -webkit-justify-content: flex-end; justify-content: flex-end; font-size: 12px; }
 .page-view .fields-top .list-link-item { margin-right: 10px; }
 .page-view .fields-top .list-link-item:last-child { margin-right: 0; }
+.page-view .field-image { float: left; margin-bottom: 20px; margin-right: 20px; }
 
 .messages .message { margin-bottom: 15px; background-color: #fcf8e3; border: 1px solid #fbeed5; color: #c09853; -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px; padding: 8px 14px; }
 .messages .message--error { color: #b94a48; background-color: #f2dede; border-color: #eed3d7; }

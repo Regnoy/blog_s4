@@ -93,13 +93,13 @@ term_delete:
 #comments ROUTERS
 comment_edit:
   path: /comment/{id}/edit
-  defaults: { _controller: CommentBundle:Comment:edit }
+  defaults: { _controller: App\Controller\CommentController::edit }
   requirements:
     id: '\d+'
 #
 comment_delete:
   path: /comment/{id}/delete
-  defaults: { _controller: CommentBundle:Comment:remove }
+  defaults: { _controller: App\Controller\CommentController::remove }
   requirements:
     id: '\d+'
 
