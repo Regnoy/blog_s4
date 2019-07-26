@@ -3,12 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Term;
+use App\Kernel;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class BlockController extends Controller {
 
   public function logo(){
-    return $this->render('Block/logo.html.twig');
+  	return $this->render('Block/logo.html.twig');
   }
   public function mainMenu(){
     return $this->render('Block/main-menu.html.twig');

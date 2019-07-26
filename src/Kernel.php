@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
 
@@ -14,6 +15,11 @@ class Kernel extends BaseKernel
     use MicroKernelTrait;
 
     const CONFIG_EXTS = '.{php,xml,yaml,yml}';
+	
+	/**
+	 * @var ContainerInterface
+	 */
+    public static $staticServices;
 
     public function getCacheDir()
     {
@@ -57,5 +63,9 @@ class Kernel extends BaseKernel
         $routes->import($confDir.'/{routes}/*'.self::CONFIG_EXTS, '/', 'glob');
         $routes->import($confDir.'/{routes}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, '/', 'glob');
         $routes->import($confDir.'/{routes}'.self::CONFIG_EXTS, '/', 'glob');
+    }
+    
+    public static function service(string $id){
+    	return static::$staticServices->get($id);
     }
 }

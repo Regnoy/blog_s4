@@ -33,3 +33,7 @@ services:
 
     Uv\Core\Components\Utils\SchemaReader:
         autowire: true
+
+    App\Events\StaticServiceRequestListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
